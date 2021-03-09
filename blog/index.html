@@ -1,0 +1,1242 @@
+<!DOCTYPE html>
+<html prefix="
+        og: http://ogp.me/ns# article: http://ogp.me/ns/article#
+    " vocab="http://ogp.me/ns" lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="description" content="A Faster Python">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>PyPy</title>
+<link href="../assets/css/rst_base.css" rel="stylesheet" type="text/css">
+<link href="../assets/css/nikola_rst.css" rel="stylesheet" type="text/css">
+<link href="../assets/css/code.css" rel="stylesheet" type="text/css">
+<link href="../assets/css/theme.css" rel="stylesheet" type="text/css">
+<link href="../assets/css/styles.css" rel="stylesheet" type="text/css">
+<meta name="theme-color" content="#5670d4">
+<meta name="generator" content="Nikola (getnikola.com)">
+<link rel="alternate" type="application/rss+xml" title="RSS" hreflang="en" href="../rss.xml">
+<link rel="canonical" href="https://www.pypy.org/blog/">
+<link rel="icon" href="../favicon2.ico" sizes="16x16">
+<link rel="icon" href="../favicon32x32.ico" sizes="32x32">
+<link rel="next" href="index-40.html" type="text/html">
+<!--[if lt IE 9]><script src="../assets/js/html5shiv-printshiv.min.js"></script><![endif]--><link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
+</head>
+<body>
+    <a href="#content" class="sr-only sr-only-focusable">Skip to main content</a>
+    <div id="container">
+             <header id="header"><!-- Adapted from https://www.taniarascia.com/responsive-dropdown-navigation-bar --><section class="navigation"><div class="nav-container">
+            <div class="brand">
+                <a href="../index.html">
+                    <image id="toplogo" src="../images/pypy-logo.svg" width="75px;" alt="PyPy/"></image></a>
+            </div>
+            <nav><ul class="nav-list">
+<li> 
+                <a href="#!">Features</a>
+                <ul class="nav-dropdown">
+<li> <a href="../features.html">What is PyPy?</a> </li>  
+                    <li> <a href="../compat.html">Compatibility</a> </li>  
+                    <li> <a href="../performance.html">Performance</a> </li>  
+                </ul>
+</li>
+          <li> <a href="../download.html">Download</a> </li>  
+          <li> <a href="http://doc.pypy.org">Dev Docs</a> </li>  
+            <li> 
+                <a href="#!">Blog</a>
+                <ul class="nav-dropdown">
+<li> <a href="../blog">Index</a> </li>  
+                    <li> <a href="../categories">Tags</a> </li>  
+                    <li> <a href="../archive.html">Archive by year</a> </li>  
+                    <li> <a href="../rss.xml">RSS feed</a> </li>  
+                    <li> <a href="https://morepypy.blogspot.com/">Old site</a> </li>  
+                </ul>
+</li>
+            <li> 
+                <a href="#!">About</a>
+                <ul class="nav-dropdown">
+<li> <a href="https://twitter.com/pypyproject">Twitter</a> </li>  
+                    <li> <a href="https://quodlibet.duckdns.org/irc/pypy/latest.log.html#irc-end">IRC</a> </li>  
+                    <li> <a href="../people.html">People</a> </li>  
+                    <li> <a href="../howtohelp.html">How To Help?</a> </li>  
+                    <li> <a href="../contact.html">Contact</a> </li>  
+                </ul>
+</li>
+
+                </ul></nav><div class="nav-mobile">
+                <a id="nav-toggle" href="#!"> <span></span></a>
+            </div>
+        </div>
+    </section></header><main id="content"><div class="post">
+<div class="postindex">
+    <article class="h-entry post-text" itemscope="itemscope" itemtype="http://schema.org/Article"><header><h1 class="p-name entry-title"><a href="../posts/2020/12/mac-meets-arm64-940822335619099039.html" class="u-url">Mac meets Arm64</a></h1>
+        <div class="metadata">
+            <p class="byline author vcard"><span class="byline-name fn" itemprop="author">
+                The PyPy Team
+            </span></p>
+            <p class="dateline">
+            <a href="../posts/2020/12/mac-meets-arm64-940822335619099039.html" rel="bookmark">
+            <time class="published dt-published" datetime="2020-12-31T09:53:00Z" itemprop="datePublished" title="2020-12-31 09:53">2020-12-31 09:53</time></a>
+            </p>
+            <p class="commentline">  8 comments
+</p>
+        </div>
+    </header><div class="e-content entry-content">
+    <b>Looking for sponsorship</b>
+
+<p>Apple now ships Macs which are running on an arm64 variant machine with the
+latest version of MacOS, Big Sur M1.  We are getting requests for PyPy to
+support this new architecture.  Here is our position on this topic (or at least
+mine, Armin Rigo's), and how you can help.</p>
+
+<p>Porting PyPy is harder than just re-running the compiler, because PyPy contains
+a few big architecture-dependent "details", like the JIT compiler and the
+foreign function interfaces (CFFI and ctypes).</p>
+
+<p>Fixing the JIT compiler should not be too much work: we already support arm64,
+just the Linux one.  But Apple made various details different (like the calling
+conventions).  A few other parts need to be fixed too, notably CFFI and ctypes,
+again because of the calling conventions.</p>
+
+<p>Fixing that would be a reasonable amount of work.  I would do it myself for a
+small amount of money.  However, the story doesn't finish here.  Obviously, the
+<b>start</b> of the story would be to get ssh access to a Big Sur M1 machine.  (If at
+this point you're thinking "sure, I can give you ssh access for three months",
+then please read on.)  The <b>next</b> part of the story is that we need a machine
+available long term.  It can be either a machine provided and maintained by a
+third party, or alternatively a pot of money big enough to support the
+acquision of a machine and ongoing work of one of us.</p>
+
+<p>If we go with the provided-machine solution:  What we need isn't a lot of
+resources.  Our CI requires maybe 10 GB of disk space, and a few hours of CPU
+per run.  It should fit into 8 GB of RAM.  We normally do a run every night but
+we can certainly lower the frequency a bit if that would help.  However, we'd
+ideally like some kind of assurance that you are invested into maintaining the
+machine for the next 3-5 years (I guess, see below).  We had far too many
+machines that disappeared after a few months.</p>
+
+<p>If we go with the money-supported solution: it's likely that after 3-5 years
+the whole Mac base will have switched to arm64, we'll drop x86-64 support for
+Mac, and we'll be back to the situation of the past where there was only one
+kind of Mac machine to care about.  In the meantime, we are looking at 3-5
+years of lightweight extra maintenance.  We have someone that has said he would
+do it, but not for free.</p>
+
+<p>If either of these two solutions occurs, we'll still have, I quote, "probably
+some changes in distutils-type stuff to make python happy", and then some
+packaging/deployment changes to support the  "universal2" architecture, i.e.
+including both versions inside a single executable (which will <b>not</b> be just an
+extra switch to clang, because the two versions need a different JIT backend
+and so must be translated separately).</p>
+
+<p>So, now all the factors are on the table.  We won't do the minimal "just the
+JIT compiler fixes" if we don't have a plan that goes farther.  Either we get
+sufficient money, and maybe support, and then we can do it quickly; or PyPy
+will just remain not natively available on M1 hardware for the next 3-5 years.
+We are looking forward to supporting M1, and view resources contributed by
+the community as a vote of confidence in assuring the future of PyPy on this
+hardware.  Contact us: <a href="mailto:pypy-dev@python.org">pypy-dev@python.org</a>, or our private mailing
+list <a href="mailto:pypy-z@python.org">pypy-z@python.org</a>.</p>
+
+<p>Thanks for reading!</p>
+
+<p>Armin Rigo</p>
+    </div>
+    </article><div class="comment-level comment-level-1">
+      <div class="comment comment-6361512567097951643">
+        <div class="comment-header">
+          <a name="comment-6361512567097951643"></a>
+            <span class="author">Adam Sah</span> wrote on <span class="date">2020-12-31 14:16</span>:
+        </div>
+        <div class="comment-content">
+          <p>if you post a crowdsourcing link (e.g. gofundme, etc) I'd be happy to contribute, and now that it's hit the front page of HN, I'm sure lots of other people would join. M1 macs are pretty inexpensive.<br><br>p.s. thanks!!! for all the work - I use pypy regularly.<br></p>
+        </div>
+      </div>
+      <div class="comment comment-4524799428654355330">
+        <div class="comment-header">
+          <a name="comment-4524799428654355330"></a>
+            <span class="author">Joshua Herman</span> wrote on <span class="date">2020-12-31 16:47</span>:
+        </div>
+        <div class="comment-content">
+          <p>I have an M1 MacBook Air that I could give you SSH access to but it will come to me in mid January.</p>
+        </div>
+      </div>
+      <div class="comment comment-1098849030683393029">
+        <div class="comment-header">
+          <a name="comment-1098849030683393029"></a>
+            <span class="author">Anonymous</span> wrote on <span class="date">2020-12-31 21:51</span>:
+        </div>
+        <div class="comment-content">
+          <p>ditto on the crowdsource</p>
+        </div>
+      </div>
+      <div class="comment comment-4664589309415892523">
+        <div class="comment-header">
+          <a name="comment-4664589309415892523"></a>
+            <span class="author">Michael</span> wrote on <span class="date">2021-01-01 00:03</span>:
+        </div>
+        <div class="comment-content">
+          <p>You can contribute to PyPy on their Open Collective page:<br><br><a href="https://opencollective.com/pypy" rel="nofollow">https://opencollective.com/pypy</a></p>
+        </div>
+      </div>
+      <div class="comment comment-6722182300822744347">
+        <div class="comment-header">
+          <a name="comment-6722182300822744347"></a>
+            <span class="author">Adam Sah</span> wrote on <span class="date">2021-01-01 00:25</span>:
+        </div>
+        <div class="comment-content">
+          <p>done.<br></p>
+        </div>
+      </div>
+      <div class="comment comment-8608819457034357374">
+        <div class="comment-header">
+          <a name="comment-8608819457034357374"></a>
+            <span class="author">Anonymous</span> wrote on <span class="date">2021-01-02 20:03</span>:
+        </div>
+        <div class="comment-content">
+          <p>M1 Macs for CI are available for free for open source developers. See: https://www.macstadium.com/opensource</p>
+        </div>
+      </div>
+      <div class="comment comment-3807754939719219692">
+        <div class="comment-header">
+          <a name="comment-3807754939719219692"></a>
+            <span class="author">Armin Rigo</span> wrote on <span class="date">2021-01-02 20:29</span>:
+        </div>
+        <div class="comment-content">
+          <p>@Anonymous: like many others, MacStadium is conflating "open source" with "hobbyist" by adding this clause: "Open source project may not (...)receive funding from commercial companies or organizations (NGO, education, research or governmental). (...) Contributors who are paid to work on the project are not eligible."  The point of my blog post was precisely that I won't do it for free.</p>
+        </div>
+      </div>
+      <div class="comment comment-7290474999839814519">
+        <div class="comment-header">
+          <a name="comment-7290474999839814519"></a>
+            <span class="author">glyph</span> wrote on <span class="date">2021-01-04 05:39</span>:
+        </div>
+        <div class="comment-content">
+          <p>It seems like it might be worth reaching out to MacStadium about it regardless. They've got Golang, Rust, Node, NumFocus, and Monero listed on their support page https://www.macstadium.com/opensource-members which suggests to me that this language might just be a hamfistedly awkward attempt to avoid somebody at Facebook trying to get a free fleet of mac minis out of open sourcing their SDK or something.</p>
+        </div>
+      </div>
+         </div>
+
+    <article class="h-entry post-text" itemscope="itemscope" itemtype="http://schema.org/Article"><header><h1 class="p-name entry-title"><a href="../posts/2020/11/pypy-733-triple-release-python-37-36-3446596804408262749.html" class="u-url">PyPy 7.3.3 triple release: python 3.7, 3.6, and 2.7</a></h1>
+        <div class="metadata">
+            <p class="byline author vcard"><span class="byline-name fn" itemprop="author">
+                The PyPy Team
+            </span></p>
+            <p class="dateline">
+            <a href="../posts/2020/11/pypy-733-triple-release-python-37-36-3446596804408262749.html" rel="bookmark">
+            <time class="published dt-published" datetime="2020-11-21T19:32:00Z" itemprop="datePublished" title="2020-11-21 19:32">2020-11-21 19:32</time></a>
+            </p>
+            <p class="commentline">  No comments
+</p>
+        </div>
+    </header><div class="e-content entry-content">
+    <p> The PyPy team is proud to release the version 7.3.3 of PyPy, which includes
+three different interpreters:
+</p>
+<blockquote>
+<div><ul class="simple">
+<li>PyPy2.7, which is an interpreter supporting the syntax and the features of
+Python 2.7 including the stdlib for CPython 2.7.18 (updated from the
+previous version)</li>
+<li>PyPy3.6: which is an interpreter supporting the syntax and the features of
+Python 3.6, including the stdlib for CPython 3.6.12 (updated from the
+previous version).</li>
+<li>PyPy3.7 beta: which is our second release of an interpreter supporting the
+syntax and the features of Python 3.7, including the stdlib for CPython
+3.7.9. We call this beta quality software, there may be issues about
+compatibility with new and changed features in CPython 3.7.
+Please let us know what is broken or missing. We have not implemented the
+<a class="reference external" href="https://docs.python.org/3/whatsnew/3.7.html#re">documented changes</a> in the <code class="docutils literal notranslate"><span class="pre">re</span></code> module, and a few other pieces are also
+missing. For more information, see the <a class="reference external" href="https://foss.heptapod.net/pypy/pypy/-/wikis/py3.7%20status">PyPy 3.7 wiki</a> page</li>
+</ul></div>
+</blockquote>
+<p>The interpreters are based on much the same codebase, thus the multiple
+release. This is a micro release, all APIs are compatible with the 7.3
+releases, but read on to find out what is new.</p>
+<p>Several issues found in the 7.3.2 release were fixed. Many of them came from the
+great work by <a class="reference external" href="https://conda-forge.org/blog//2020/03/10/pypy">conda-forge</a> to ship PyPy binary packages.  A big shout out
+to them for taking this on.</p>
+<p>Development of PyPy has moved to <a class="reference external" href="https://foss.heptapod.net/pypy/pypy">https://foss.heptapod.net/pypy/pypy</a>.
+This was covered more extensively in this <a class="reference external" href="https://morepypy.blogspot.com/2020/02/pypy-and-cffi-have-moved-to-heptapod.html">blog post</a>. We have seen an
+increase in the number of drive-by contributors who are able to use gitlab +
+mercurial to create merge requests.</p>
+<p>The <a class="reference external" href="https://cffi.readthedocs.io">CFFI</a> backend has been updated to version 1.14.3. We recommend using CFFI
+rather than c-extensions to interact with C, and using <a class="reference external" href="https://cppyy.readthedocs.io">cppyy</a> for performant
+wrapping of C++ code for Python.</p>
+<p>A new contributor took us up on the challenge to get <a href="https://doc.pypy.org/en/latest/windows.html#what-is-missing-for-a-full-64-bit-translation">windows 64-bit</a> support.
+The work is proceeding on the <code class="docutils literal notranslate"><span class="pre">win64</span></code> branch, more help in coding or
+sponsorship is welcome. In anticipation of merging this large change, we fixed
+many test failures on windows.</p>
+<p>As always, this release fixed several issues and bugs.  We strongly recommend
+updating. Many of the fixes are the direct result of end-user bug reports, so
+please continue reporting issues as they crop up.</p>
+<p>You can find links to download the v7.3.3 releases here:</p>
+<blockquote>
+<div><a class="reference external" href="https://pypy.org/download.html">https://pypy.org/download.html</a></div>
+</blockquote>
+<p>We would like to thank our <a href="https://opencollective.com/pypy">donors</a> for the continued support of the PyPy
+project. If PyPy is not quite good enough for your needs, we are available for
+direct consulting work.</p>
+<p>We would also like to thank our contributors and encourage new people to join
+the project. PyPy has many layers and we need help with all of them: <a class="reference external" href="https://doc.pypy.org/en/latest/index.html">PyPy</a>
+and <a class="reference external" href="https://rpython.readthedocs.org">RPython</a> documentation improvements, tweaking popular modules to run
+on pypy, or general <a class="reference external" href="https://doc.pypy.org/en/latest/project-ideas.html">help</a> with making RPython’s JIT even better. Since the
+previous release, we have accepted contributions from 2 new contributors,
+thanks for pitching in.</p>
+<p>If you are a python library maintainer and use c-extensions, please consider
+making a cffi / cppyy version of your library that would be performant on PyPy.
+In any case both <a class="reference external" href="https://github.com/joerick/cibuildwheel">cibuildwheel</a> and the <a class="reference external" href="https://github.com/matthew-brett/multibuild">multibuild system</a> support
+building wheels for PyPy.</p>
+<div class="section" id="what-is-pypy">
+<h2 style="text-align: center;"><span style="font-size: x-large;">What is PyPy?</span></h2>
+<p>PyPy is a Python interpreter, a drop-in replacement for CPython 2.7, 3.6, and
+3.7. It’s fast (<a class="reference external" href="https://speed.pypy.org">PyPy and CPython 3.7.4</a> performance
+comparison) due to its integrated tracing JIT compiler.</p>
+<p>We also welcome developers of other <a class="reference external" href="https://rpython.readthedocs.io/en/latest/examples.html">dynamic languages</a> to see what RPython
+can do for them.</p>
+<p>This PyPy release supports:</p>
+<blockquote>
+<div><ul class="simple">
+<li>
+<b>x86</b> machines on most common operating systems
+(Linux 32/64 bits, Mac OS X 64 bits, Windows 32 bits, OpenBSD, FreeBSD)</li>
+<li>big- and little-endian variants of <b>PPC64</b> running Linux,</li>
+<li>
+<b>s390x</b> running Linux</li>
+<li>64-bit <b>ARM</b> machines running Linux.</li>
+</ul></div>
+</blockquote>
+<p>PyPy does support ARM 32 bit processors, but does not release binaries.</p>
+<p> </p>
+<h2 style="text-align: center;">
+<span style="font-size: x-large;">What else is new?</span>
+</h2>
+For more information about the 7.3.3 release, see the full <a href="https://doc.pypy.org/en/latest/release-v7.3.3.html">changelog</a>.<br><br>
+Please update, and continue to help us make PyPy better.<br><br>
+Cheers,<br>
+The PyPy team
+<p> </p>
+</div>
+    </div>
+    </article><div class="no-comments">No comments.</div>
+
+    <article class="h-entry post-text" itemscope="itemscope" itemtype="http://schema.org/Article"><header><h1 class="p-name entry-title"><a href="../posts/2020/09/pypy-732-triple-release-python-27-36-3980901335490872787.html" class="u-url">PyPy 7.3.2 triple release: python 2.7, 3.6, and 3.7</a></h1>
+        <div class="metadata">
+            <p class="byline author vcard"><span class="byline-name fn" itemprop="author">
+                The PyPy Team
+            </span></p>
+            <p class="dateline">
+            <a href="../posts/2020/09/pypy-732-triple-release-python-27-36-3980901335490872787.html" rel="bookmark">
+            <time class="published dt-published" datetime="2020-09-25T06:45:00Z" itemprop="datePublished" title="2020-09-25 06:45">2020-09-25 06:45</time></a>
+            </p>
+            <p class="commentline">  4 comments
+</p>
+        </div>
+    </header><div class="e-content entry-content">
+    <p> </p>
+<div style="text-align: left;">The PyPy team is proud to release version 7.3.2 of PyPy, which includes
+three different interpreters:
+</div>
+<blockquote>
+</blockquote>
+<ul style="text-align: left;">
+<li>PyPy2.7, which is an interpreter supporting the syntax and the features of
+Python 2.7 including the stdlib for CPython 2.7.13</li>
+<li>PyPy3.6: which is an interpreter supporting the syntax and the features of
+Python 3.6, including the stdlib for CPython 3.6.9.</li>
+<li>PyPy3.7 alpha: which is our first release of an interpreter supporting the
+syntax and the features of Python 3.7, including the stdlib for CPython
+3.7.9. We call this an alpha release since it is our first. It is based off PyPy 3.6 so
+issues should be around compatibility and not stability. Please try it out
+and let us know what is broken or missing. We have not implemented some of the
+<a class="reference external" href="https://docs.python.org/3/whatsnew/3.7.html#re">documented changes</a> in the <code class="docutils literal notranslate"><span class="pre">re</span></code> module, and other pieces are also
+missing. For more information, see the <a class="reference external" href="https://foss.heptapod.net/pypy/pypy/-/wikis/py3.7%20status">PyPy 3.7 wiki</a> page</li>
+</ul>
+<blockquote><div>
+</div></blockquote>
+<p>The interpreters are based on much the same codebase, thus the multiple
+release. This is a micro release, all APIs are compatible with the 7.3.0 (Dec
+2019) and 7.3.1 (April 2020) releases, but read on to find out what is new.</p>
+<p>Conda Forge now <a class="reference external" href="https://conda-forge.org/blog//2020/03/10/pypy">supports PyPy</a> as a python interpreter. The support is quite
+complete for linux and macOS. This is the result of a lot of
+hard work and good will on the part of the Conda Forge team.  A big shout out
+to them for taking this on.</p>
+<p>Development of PyPy has transitioning to <a class="reference external" href="https://foss.heptapod.net/pypy/pypy">https://foss.heptapod.net/pypy/pypy</a>.
+This move was covered more extensively in this <a class="reference external" href="https://morepypy.blogspot.com/2020/02/pypy-and-cffi-have-moved-to-heptapod.html">blog post</a>. We have seen an
+increase in the number of drive-by contributors who are able to use gitlab +
+mercurial to create merge requests.</p>
+<p>The <a class="reference external" href="https://cffi.readthedocs.io">CFFI</a> backend has been updated to version 1.14.2. We recommend using CFFI
+rather than c-extensions to interact with C, and using <a class="reference external" href="https://cppyy.readthedocs.io">cppyy</a> for performant
+wrapping of C++ code for Python.</p>
+<p>NumPy has begun shipping wheels on PyPI for PyPy, currently for linux 64-bit
+only.  Wheels for PyPy windows will be available from the next NumPy release. Thanks to NumPy for their support.<br></p>
+<p>A new contributor took us up on the challenge to get windows 64-bit support.
+The work is proceeding on the <code class="docutils literal notranslate"><span class="pre">win64</span></code> branch, more help in coding or
+sponsorship is welcome.</p>
+<p>As always, this release fixed several issues and bugs.  We strongly recommend
+updating. Many of the fixes are the direct result of end-user bug reports, so
+please continue reporting issues as they crop up.</p>
+<p>You can find links to download the v7.3.2 releases here:</p>
+<blockquote>
+<div><a class="reference external" href="https://pypy.org/download.html">https://pypy.org/download.html</a></div>
+</blockquote>
+<p>We would like to thank our donors for the continued support of the PyPy
+project. Please help support us at <a href="https://opencollective.com/pypy#section-contribute" target="_blank">Open Collective</a>. If PyPy is not yet good enough for your needs, we are available for
+direct consulting work.<br></p>
+<p>We would also like to thank our contributors and encourage new people to join
+the project. PyPy has many layers and we need help with all of them: <a class="reference external" href="https://doc.pypy.org/en/latest/index.html">PyPy</a>
+and <a class="reference external" href="https://rpython.readthedocs.org">RPython</a> documentation improvements, tweaking popular modules to run
+on pypy, or general <a class="reference external" href="https://doc.pypy.org/en/latest/project-ideas.html">help</a> with making RPython’s JIT even better. Since the
+previous release, we have accepted contributions from 8 new contributors,
+thanks for pitching in.</p>
+<p>If you are a python library maintainer and use c-extensions, please consider
+making a cffi / cppyy version of your library that would be performant on PyPy.
+In any case both <a class="reference external" href="https://github.com/joerick/cibuildwheel">cibuildwheel</a> and the <a class="reference external" href="https://github.com/matthew-brett/multibuild">multibuild system</a> support
+building wheels for PyPy.</p>
+<div class="section" id="what-is-pypy">
+<h2 style="text-align: center;">What is PyPy?</h2>
+<p>PyPy is a very compliant Python interpreter, almost a drop-in replacement for
+CPython 2.7, 3.6, and 3.7. It’s fast (<a class="reference external" href="https://speed.pypy.org">PyPy and CPython 2.7.x</a> performance
+comparison) due to its integrated tracing JIT compiler.</p>
+<p>We also welcome developers of other <a class="reference external" href="https://rpython.readthedocs.io/en/latest/examples.html">dynamic languages</a> to see what RPython
+can do for them.</p>
+<p>This PyPy release supports:</p>
+<blockquote>
+<div><ul class="simple">
+<li>
+<b>x86</b> machines on most common operating systems
+(Linux 32/64 bits, Mac OS X 64 bits, Windows 32 bits, OpenBSD, FreeBSD)</li>
+<li>big- and little-endian variants of <b>PPC64</b> running Linux,</li>
+<li>
+<b>s390x</b> running Linux</li>
+<li>64-bit <b>ARM</b> machines running Linux.</li>
+</ul></div>
+</blockquote>
+<p>PyPy does support ARM 32 bit processors, but does not release binaries.</p>
+</div>
+
+<div class="section" id="changelog">
+<h2 style="text-align: center;">
+<span style="font-size: x-large;">What else is new?</span>
+</h2>
+For more information about the 7.3.2 release, see the full <a href="https://pypy.readthedocs.io/en/latest/release-v7.3.2.html">changelog</a>.<br><br>
+Please update, and continue to help us make PyPy better.<br><br>
+Cheers,<br>
+The PyPy team
+</div>
+<p> </p>
+<p> </p>
+    </div>
+    </article><div class="comment-level comment-level-1">
+      <div class="comment comment-8732348704393619237">
+        <div class="comment-header">
+          <a name="comment-8732348704393619237"></a>
+            <span class="author">Marius Gedminas</span> wrote on <span class="date">2020-09-25 09:47</span>:
+        </div>
+        <div class="comment-content">
+          <p>The SHA256 checksum for pypy3.6-v7.3.2-aarch64.tar.bz2 is one character too short on the https://www.pypy.org/download.html.  Was it accidentally truncated during a copy/paste?</p>
+        </div>
+      </div>
+      <div class="comment comment-9022981780860428725">
+        <div class="comment-header">
+          <a name="comment-9022981780860428725"></a>
+            <span class="author">Anonymous</span> wrote on <span class="date">2020-09-25 14:03</span>:
+        </div>
+        <div class="comment-content">
+          <p>Better work</p>
+        </div>
+      </div>
+      <div class="comment comment-1323010303116905974">
+        <div class="comment-header">
+          <a name="comment-1323010303116905974"></a>
+            <span class="author">Gaëtan de Menten</span> wrote on <span class="date">2020-09-25 14:45</span>:
+        </div>
+        <div class="comment-content">
+          <p>Concerning sponsorship for the win64 branch, I am in no position to sponsor the entire thing but I would happily give a few euros if you opened a specific fund raiser for that. Note that the donation link (on the blog) is currently broken.</p>
+        </div>
+      </div>
+      <div class="comment comment-5749428326684892862">
+        <div class="comment-header">
+          <a name="comment-5749428326684892862"></a>
+            <span class="author">mattip</span> wrote on <span class="date">2020-09-26 17:32</span>:
+        </div>
+        <div class="comment-content">
+          <p>Marius Gedminas: thanks. Indeed a copy-paste truncation. Should be fixed now, try to refresh (may take 30 minutes or so to propagate)</p>
+        </div>
+      </div>
+         </div>
+
+    <article class="h-entry post-text" itemscope="itemscope" itemtype="http://schema.org/Article"><header><h1 class="p-name entry-title"><a href="../posts/2020/08/pypy-is-on-open-collective-5673322428814364737.html" class="u-url">PyPy is on Open Collective</a></h1>
+        <div class="metadata">
+            <p class="byline author vcard"><span class="byline-name fn" itemprop="author">
+                The PyPy Team
+            </span></p>
+            <p class="dateline">
+            <a href="../posts/2020/08/pypy-is-on-open-collective-5673322428814364737.html" rel="bookmark">
+            <time class="published dt-published" datetime="2020-08-29T11:53:00Z" itemprop="datePublished" title="2020-08-29 11:53">2020-08-29 11:53</time></a>
+            </p>
+            <p class="commentline">  No comments
+</p>
+        </div>
+    </header><div class="e-content entry-content">
+    <p>Hi all,</p>
+
+<p>PyPy is now a <a href="https://opencollective.com/pypy">member of Open Collective</a>, a fiscal host.  We have been thinking about switching to this organization for a couple of years; we like it for various reasons, like the budget transparency and the lightweight touch.  We can now officially announce our membership!</p>
+
+<p>With this, we are now again free to use PyPy for all financial issues, like receiving funds professionally, paying parts of sprint budgets as we like, and so on.  We will shortly be reintroducing buttons that link to Open Collective from the PyPy web site.</p>
+
+<p>Although the old donation buttons were removed last year, we believe that there are still a few people that send regularly money to the SFC, the not-for-profit charity we were affiliated with.  If you do, please stop doing it now (and, if you like to do so, please set up an equivalent donation to <a href="https://opencollective.com/pypy">PyPy on Open Collective</a>).</p>
+
+<p>And by the way, sorry for all of you who were getting mixed feelings from the previous blog post (co-written with the SFC).  <b>PyPy is committed to continue being Open Source just like before.</b>  This was never in question.  What these two blog posts mean is only that we switched to a different organization for our internal finances.</p>
+
+<p>We're looking forward to how this new relationship will go!</p>
+
+<p>Armin Rigo, for the PyPy team</p>
+    </div>
+    </article><div class="no-comments">No comments.</div>
+
+    <article class="h-entry post-text" itemscope="itemscope" itemtype="http://schema.org/Article"><header><h1 class="p-name entry-title"><a href="../posts/2020/08/a-new-chapter-for-pypy-8388322709667328389.html" class="u-url">A new chapter for PyPy</a></h1>
+        <div class="metadata">
+            <p class="byline author vcard"><span class="byline-name fn" itemprop="author">
+                The PyPy Team
+            </span></p>
+            <p class="dateline">
+            <a href="../posts/2020/08/a-new-chapter-for-pypy-8388322709667328389.html" rel="bookmark">
+            <time class="published dt-published" datetime="2020-08-12T19:00:00Z" itemprop="datePublished" title="2020-08-12 19:00">2020-08-12 19:00</time></a>
+            </p>
+            <p class="commentline">  5 comments
+</p>
+        </div>
+    </header><div class="e-content entry-content">
+    <p><i>PyPy winds down its membership in the Software Freedom Conservancy</i></p>
+
+<h1>Conservancy and PyPy's great work together</h1>
+
+<p><a href="https://pypy.org/">PyPy</a> joined <a href="https://sfconservancy.org/">Conservancy</a> in
+the <a href="https://sfconservancy.org/blog/2011/jan/02/oct-dec-2010/">second half of 2010</a>, shortly after the release of
+PyPy 1.2, the first version to contain a fully functional JIT. <a href="https://lwn.net/Articles/550427/">In 2013</a>, PyPy
+started supporting ARM, bringing its just-in-time speediness to many more devices and began working toward supporting NumPy to help
+scientists crunch their numbers faster. Together, PyPy and Conservancy ran successful fundraising drives and facilitated payment
+and oversight for <a href="https://sfconservancy.org/blog/2016/dec/01/pypy-2016/">contractors and code sprints</a>.</p>
+
+<p>Conservancy supported PyPy's impressive growth as it expanded support for
+different hardware platforms, greatly improved the performance of C extensions,
+and added support for Python 3 as the language itself evolved.</p>
+
+<h1>The road ahead</h1>
+  
+<p>Conservancy provides a fiscal and organizational home for projects that find the
+freedoms and guardrails that come along with a charitable home advantageous for
+their community goals. While this framework was a great fit for the early PyPy
+community, times change and all good things must come to an end.</p>
+
+<p>PyPy will remain a free and open source project, but the community's structure
+and organizational underpinnings will be changing and the PyPy community will be
+exploring options outside of the charitable realm for its next phase of growth
+("charitable" in the legal sense -- PyPy will remain a community project).</p>
+
+<p>During the last year PyPy and Conservancy have worked together to properly
+utilise the generous donations made by stalwart PyPy enthusiats over the years
+and to wrap up PyPy's remaining charitable obligations. PyPy is grateful for
+the Conservancy's help in shepherding the project toward its next chapter.</p>
+
+<h1>Thank yous</h1>
+<p>From Conservancy: <br></p>
+<p style="text-align: left;"></p>
+<blockquote>"We are happy that Conservancy was able to help PyPy bring important software
+for the public good during a critical time in its history. We wish the
+community well and look forward to seeing it develop and succeed in new ways." <br>
+</blockquote>
+<blockquote>— Karen Sandler, Conservancy's Executive Director</blockquote>
+<p></p>
+<p>From PyPy:</p>
+<p></p>
+<div style="text-align: left;"><div style="text-align: left;">
+<blockquote><p>"PyPy would like to thank Conservancy for their decade long support in
+building the community and wishes Conservancy continued success in their
+journey promoting, improving, developing and defending free and open source
+sofware." <br></p></blockquote>
+<blockquote><p style="text-align: left;">— Simon Cross &amp; Carl Friedrich Bolz-Tereick, on behalf of PyPy.</p></blockquote>
+</div></div>
+<p></p>
+<blockquote>
+</blockquote>
+
+<h1>About</h1>
+
+<p><a class="reference external" href="https://pypy.org/">PyPy</a> is a multi-layer python interpreter with a built-in JIT compiler that runs
+Python quickly across different computing environments.
+<a class="reference external" href="https://sfconservancy.org/">Software Freedom Conservancy</a> (Conservancy) is a charity that provides a home
+to over forty free and open source software projects.</p>
+    </div>
+    </article><div class="comment-level comment-level-1">
+      <div class="comment comment-1990052443244807947">
+        <div class="comment-header">
+          <a name="comment-1990052443244807947"></a>
+            <span class="author">intgr</span> wrote on <span class="date">2020-08-12 23:36</span>:
+        </div>
+        <div class="comment-content">
+          <p>This post has lots of words but unfortunately contains almost no information. What impact does this change have on PyPy? What is the new chapter?<br></p>
+        </div>
+      </div>
+      <div class="comment comment-3964298030103788729">
+        <div class="comment-header">
+          <a name="comment-3964298030103788729"></a>
+            <span class="author">Rick Sanchez</span> wrote on <span class="date">2020-08-13 06:33</span>:
+        </div>
+        <div class="comment-content">
+          <p>What does PyPy do? Why should I use it over other Python compilers?</p>
+        </div>
+      </div>
+      <div class="comment comment-6709930945749531766">
+        <div class="comment-header">
+          <a name="comment-6709930945749531766"></a>
+            <span class="author">Anonymous</span> wrote on <span class="date">2020-08-13 08:38</span>:
+        </div>
+        <div class="comment-content">
+          <p>@intgr the wind-down with the SFC hasn't been smooth and this is the politically-neutral, agreed-by-both-parties post.  PyPy remains the same free and open-source project.  Essentially we just switched to a different money-handler.  We're announcing it in the next blog post.</p>
+        </div>
+      </div>
+      <div class="comment comment-1948152757547113242">
+        <div class="comment-header">
+          <a name="comment-1948152757547113242"></a>
+            <span class="author">Florian</span> wrote on <span class="date">2020-08-19 11:10</span>:
+        </div>
+        <div class="comment-content">
+          <p>As https://bitbucket.org/pypy/pypy/downloads/pypy2.7-v7.3.1-linux32.tar.bz2 is down (due to heptapod move ?)<br><br>Where can we download pypy binaries ?</p>
+
+        </div>
+      </div>
+      <div class="comment comment-6833997738017974869">
+        <div class="comment-header">
+          <a name="comment-6833997738017974869"></a>
+            <span class="author">Armin Rigo</span> wrote on <span class="date">2020-08-19 22:44</span>:
+        </div>
+        <div class="comment-content">
+          <p>The page https://pypy.org/download.html contains the updated links.</p>
+        </div>
+      </div>
+         </div>
+
+    <article class="h-entry post-text" itemscope="itemscope" itemtype="http://schema.org/Article"><header><h1 class="p-name entry-title"><a href="../posts/2020/04/pypy-731-released-6266451647387657480.html" class="u-url">PyPy 7.3.1 released</a></h1>
+        <div class="metadata">
+            <p class="byline author vcard"><span class="byline-name fn" itemprop="author">
+                The PyPy Team
+            </span></p>
+            <p class="dateline">
+            <a href="../posts/2020/04/pypy-731-released-6266451647387657480.html" rel="bookmark">
+            <time class="published dt-published" datetime="2020-04-10T14:29:00Z" itemprop="datePublished" title="2020-04-10 14:29">2020-04-10 14:29</time></a>
+            </p>
+            <p class="commentline">  No comments
+</p>
+        </div>
+    </header><div class="e-content entry-content">
+    <div dir="ltr" style="text-align: left;">
+The PyPy team is proud to release the version 7.3.1 of PyPy, which includes
+two different interpreters:<br><blockquote>
+<div>
+<ul class="simple">
+<li>PyPy2.7, which is an interpreter supporting the syntax and the features of
+Python 2.7 including the stdlib for CPython 2.7.13</li>
+<li>PyPy3.6: which is an interpreter supporting the syntax and the features of
+Python 3.6, including the stdlib for CPython 3.6.9.</li>
+</ul>
+</div>
+</blockquote>
+The interpreters are based on much the same codebase, thus the multiple
+release. This is a micro release, no APIs have changed since the 7.3.0 release
+in December, but read on to find out what is new.<br><br>
+Conda Forge now <a class="reference external" href="https://conda-forge.org/blog//2020/03/10/pypy">supports PyPy</a> as a Python interpreter. The support right now
+is being built out. After this release, many more c-extension-based
+packages can be successfully built and uploaded. This is the result of a lot of
+hard work and good will on the part of the Conda Forge team.  A big shout out
+to them for taking this on.<br><br>
+We have worked with the Python packaging group to support tooling around
+building third party packages for Python, so this release updates the pip and
+setuptools installed when executing <code class="docutils literal notranslate"><span class="pre">pypy</span> <span class="pre">-mensurepip</span></code> to <code class="docutils literal notranslate"><span class="pre">pip&gt;=20</span></code>. This
+completes the work done to update the PEP 425 <a class="reference external" href="https://www.python.org/dev/peps/pep-0425/#python-tag">python tag</a> from <code class="docutils literal notranslate"><span class="pre">pp373</span></code> to
+mean “PyPy 7.3 running python3” to <code class="docutils literal notranslate"><span class="pre">pp36</span></code> meaning “PyPy running Python
+3.6” (the format is recommended in the PEP). The tag itself was
+changed in 7.3.0, but older pip versions build their own tag without querying
+PyPy. This means that wheels built for the previous tag format will not be
+discovered by pip from this version, so library authors should update their
+PyPy-specific wheels on PyPI.<br><br>
+Development of PyPy is transitioning to <a class="reference external" href="https://foss.heptapod.net/pypy/pypy">https://foss.heptapod.net/pypy/pypy</a>.
+This move was covered more extensively in the <a class="reference external" href="https://morepypy.blogspot.com/2020/02/pypy-and-cffi-have-moved-to-heptapod.html">blog post</a> from last month.<br><br>
+The <a class="reference external" href="https://cffi.readthedocs.io/">CFFI</a> backend has been updated to version 14.0. We recommend using CFFI
+rather than c-extensions to interact with C, and using <a class="reference external" href="https://cppyy.readthedocs.io/">cppyy</a> for performant
+wrapping of C++ code for Python. The <code class="docutils literal notranslate"><span class="pre">cppyy</span></code> backend has been enabled
+experimentally for win32, try it out and let use know how it works.<br><br>
+Enabling <code class="docutils literal notranslate"><span class="pre">cppyy</span></code> requires a more modern C compiler, so win32 is now built
+with MSVC160 (Visual Studio 2019). This is true for PyPy 3.6 as well as for 2.7.<br><br>
+We have improved warmup time by up to 20%, performance of <code class="docutils literal notranslate"><span class="pre">io.StringIO</span></code> to
+match if not be faster than CPython, and improved JIT code generation for
+generators (and generator expressions in particular) when passing them to
+functions like <code class="docutils literal notranslate"><span class="pre">sum</span></code>, <code class="docutils literal notranslate"><span class="pre">map</span></code>, and <code class="docutils literal notranslate"><span class="pre">map</span></code> that consume them. Performance of closures has also be improved in certain situations.<br><br>
+As always, this release fixed several issues and bugs raised by the growing
+community of PyPy users.  We strongly recommend updating. Many of the fixes are
+the direct result of end-user bug reports, so please continue reporting issues
+as they crop up.<br>
+
+You can find links to download the v7.3.1 releases here:<br><blockquote>
+<div>
+<a class="reference external" href="https://pypy.org/download.html">https://pypy.org/download.html</a>
+</div>
+</blockquote>
+We would like to thank our donors for the continued support of the PyPy
+project. If PyPy is not quite good enough for your needs, we are available for
+direct consulting work.<br><br>
+We would also like to thank our contributors and encourage new people to join
+the project. PyPy has many layers and we need help with all of them: <a class="reference external" href="https://doc.pypy.org/en/latest/index.html">PyPy</a>
+and <a class="reference external" href="https://rpython.readthedocs.org/">RPython</a> documentation improvements, tweaking popular modules to run
+on PyPy, or general <a class="reference external" href="https://doc.pypy.org/en/latest/project-ideas.html">help</a> with making RPython’s JIT even better. Since the
+previous release, we have accepted contributions from 13 new contributors,
+thanks for pitching in.<br><br>
+If you are a Python library maintainer and use c-extensions, please consider
+making a cffi / cppyy version of your library that would be performant on PyPy.
+In any case both <a class="reference external" href="https://github.com/joerick/cibuildwheel">cibuildwheel</a> and the <a class="reference external" href="https://github.com/matthew-brett/multibuild">multibuild system</a> support
+building wheels for PyPy wheels.<br><div class="section" id="what-is-pypy">
+<h2 style="text-align: center;">
+ </h2>
+<h2 style="text-align: center;">
+<span style="font-size: x-large;">What is PyPy?</span>
+</h2>
+PyPy is a very compliant Python interpreter, almost a drop-in replacement for
+CPython 2.7, 3.6, and soon 3.7. It’s fast (<a class="reference external" href="https://speed.pypy.org/">PyPy and CPython 2.7.x</a> performance
+comparison) due to its integrated tracing JIT compiler.<br><br>
+We also welcome developers of other <a class="reference external" href="https://rpython.readthedocs.io/en/latest/examples.html">dynamic languages</a> to see what RPython
+can do for them.<br><br>
+This PyPy release supports:<br><blockquote>
+<div>
+<ul class="simple">
+<li>
+<strong>x86</strong> machines on most common operating systems
+(Linux 32/64 bits, Mac OS X 64 bits, Windows 32 bits, OpenBSD, FreeBSD)</li>
+<li>big- and little-endian variants of <strong>PPC64</strong> running Linux,</li>
+<li>
+<strong>s390x</strong> running Linux</li>
+<li>64-bit <strong>ARM</strong> machines running Linux.</li>
+</ul>
+</div>
+</blockquote>
+<br><div class="section" id="changelog">
+<h2 style="text-align: center;">
+<span style="font-size: x-large;">What else is new?</span>
+</h2>
+For more information about the 7.3.1 release, see the full <a href="https://pypy.readthedocs.io/en/latest/release-v7.3.1.html">changelog</a>.<br><br>
+Please update, and continue to help us make PyPy better.<br><br>
+Cheers,<br>
+The PyPy team
+</div>
+<br><br><br>
+The PyPy Team  <br>
+</div>
+</div>
+    </div>
+    </article><div class="no-comments">No comments.</div>
+
+    <article class="h-entry post-text" itemscope="itemscope" itemtype="http://schema.org/Article"><header><h1 class="p-name entry-title"><a href="../posts/2020/03/leysin-2020-sprint-report-764567777353955897.html" class="u-url">Leysin 2020 Sprint Report</a></h1>
+        <div class="metadata">
+            <p class="byline author vcard"><span class="byline-name fn" itemprop="author">
+                The PyPy Team
+            </span></p>
+            <p class="dateline">
+            <a href="../posts/2020/03/leysin-2020-sprint-report-764567777353955897.html" rel="bookmark">
+            <time class="published dt-published" datetime="2020-03-17T21:57:00Z" itemprop="datePublished" title="2020-03-17 21:57">2020-03-17 21:57</time></a>
+            </p>
+            <p class="commentline">  2 comments
+</p>
+        </div>
+    </header><div class="e-content entry-content">
+    <p>At the end of February ten of us gathered in Leysin, Switzerland to work on<br>
+a variety of topics including <a class="reference external" href="https://github.com/pyhandle/hpy/">HPy</a>, <a class="reference external" href="https://buildbot.pypy.org/summary?branch=py3.7">PyPy Python 3.7</a> support and the PyPy<br>
+migration to <a class="reference external" href="https://foss.heptapod.net/pypy/">Heptapod</a>.<br><br></p>
+<div class="separator" style="clear: both; text-align: center;">
+<a href="https://1.bp.blogspot.com/-PIs_hVhn3RY/XnFDceuihNI/AAAAAAAAbRg/LKMOMWxeFw4jhcwqy8jx7iKzKE01fbfxQCEwYBhgL/s1600/2020_leysin_sprint_attendees.jpg" style="margin-left: 1em; margin-right: 1em;"><img border="0" height="180" src="https://1.bp.blogspot.com/-PIs_hVhn3RY/XnFDceuihNI/AAAAAAAAbRg/LKMOMWxeFw4jhcwqy8jx7iKzKE01fbfxQCEwYBhgL/s320/2020_leysin_sprint_attendees.jpg" width="320"></a>
+</div>
+<br>
+We had a fun and productive week. The snow was beautiful. There was skiing<br>
+and lunch at the top of <a class="reference external" href="https://en.wikipedia.org/wiki/Berneuse">Berneuse</a>, cooking together, some late nights at<br>
+the pub next door, some even later nights coding, and of course the<br>
+obligatory cheese fondue outing.<br><br>
+There were a few of us participating in a PyPy sprint for the first time<br>
+and a few familiar faces who had attended many sprints. Many different<br>
+projects were represented including PyPy, <a class="reference external" href="https://github.com/pyhandle/hpy/">HPy</a>, <a class="reference external" href="https://github.com/graalvm/graalpython">GraalPython</a>,<br><a class="reference external" href="https://foss.heptapod.net/pypy/">Heptapod</a>, and <a class="reference external" href="https://github.com/dgrunwald/rust-cpython">rust-cpython</a>. The atmosphere was relaxed and welcoming, so if<br>
+you're thinking of attending the next one -- please do!<br><br>
+Topics worked on:<br><br><h2>
+HPy</h2>
+HPy is a new project to design and implement a better API for extending<br>
+Python in C. If you're unfamiliar with it you can read more about it at<br><a class="reference external" href="https://github.com/pyhandle/hpy/">HPy</a>.<br><br>
+A lot of attention was devoted to the Big HPy Design Discussion which<br>
+took up two full mornings. So much was decided that this will likely<br>
+get its own detailed write-up, but bigger topics included:<br><ul class="simple">
+<li>the HPy GetAttr, SetAttr, GetItem and SetItem methods,</li>
+<li>HPy_FromVoidP and HPy_AsVoidP for passing HPy handles to C functions<br>
+that pass void* pointers to callbacks,</li>
+<li>avoiding having va_args as part of the ABI,</li>
+<li>exception handling,</li>
+<li>support for creating custom types.</li>
+</ul>
+Quite a few things got worked on too:<br><ul class="simple">
+<li>implemented support for writing methods that take keyword arguments with<br>
+HPy_METH_KEYWORDS,</li>
+<li>implemented HPy_GetAttr, HPy_SetAttr, HPy_GetItem, and HPy_SetItem,</li>
+<li>started implementing support for adding custom types,</li>
+<li>started implementing dumping JSON objects in ultrajson-hpy,</li>
+<li>refactored the PyPy GIL to improve the interaction between HPy and<br>
+PyPy's cpyext,</li>
+<li>experimented with adding HPy support to rust-cpython.</li>
+</ul>
+And there was some discussion of the next steps of the HPy initiative<br>
+including writing documentation, setting up websites and funding, and<br>
+possibly organising another HPy gathering later in the year.<br><br><h2>
+PyPy</h2>
+<ul class="simple">
+<li>Georges gave a presentation on the Heptapod topic and branch workflows<br>
+and showed everyone how to use hg-evolve.</li>
+<li>Work was done on improving the PyPy CI buildbot post the move to<br>
+heptapod, including a light-weight pre-merge CI and restricting<br>
+when the full CI is run to only branch commits.</li>
+<li>A lot of work was done improving the -D tests. </li>
+</ul>
+<br><h2>
+Miscellaneous</h2>
+<ul class="simple">
+<li>Armin demoed VRSketch and NaN Industries in VR, including an implementation<br>
+of the Game of Life within NaN Industries!</li>
+<li>Skiing!</li>
+</ul>
+<br><h2>
+Aftermath</h2>
+Immediately after the sprint large parts of Europe and the world were<br>
+hit by the COVID-19 epidemic. It was good to spend time together before<br>
+travelling ceased to be a sensible idea and many gatherings were cancelled.<br><br>
+Keep safe out there everyone.<br><br>
+The HPy &amp; PyPy Team &amp; Friends<br><br><i>In joke for those who attended the sprint: Please don't replace this blog post<br>
+with its Swedish translation (or indeed a translation to any other language :).</i>
+    </div>
+    </article><div class="comment-level comment-level-1">
+      <div class="comment comment-5886740003122828365">
+        <div class="comment-header">
+          <a name="comment-5886740003122828365"></a>
+            <span class="author">Pim</span> wrote on <span class="date">2020-03-30 13:04</span>:
+        </div>
+        <div class="comment-content">
+          <p>How does HPY relate to CFFI?<br><br></p>
+        </div>
+      </div>
+      <div class="comment comment-8894121621448970780">
+        <div class="comment-header">
+          <a name="comment-8894121621448970780"></a>
+            <span class="author">Antonio Cuni</span> wrote on <span class="date">2020-03-30 16:44</span>:
+        </div>
+        <div class="comment-content">
+          <p>@Pim: CFFI allows to wrap C code in pure Python.<br>HPy allows to write Python extensions in C.<br><br>For example, you can't write a new class in CFFI, and CFFI functions can't receive Python objects as arguments</p>
+        </div>
+      </div>
+         </div>
+
+    <article class="h-entry post-text" itemscope="itemscope" itemtype="http://schema.org/Article"><header><h1 class="p-name entry-title"><a href="../posts/2020/02/pypy-and-cffi-have-moved-to-heptapod-5791595152472747032.html" class="u-url">PyPy and CFFI have moved to Heptapod</a></h1>
+        <div class="metadata">
+            <p class="byline author vcard"><span class="byline-name fn" itemprop="author">
+                The PyPy Team
+            </span></p>
+            <p class="dateline">
+            <a href="../posts/2020/02/pypy-and-cffi-have-moved-to-heptapod-5791595152472747032.html" rel="bookmark">
+            <time class="published dt-published" datetime="2020-02-16T14:36:00Z" itemprop="datePublished" title="2020-02-16 14:36">2020-02-16 14:36</time></a>
+            </p>
+            <p class="commentline">  5 comments
+</p>
+        </div>
+    </header><div class="e-content entry-content">
+    <div dir="ltr" style="text-align: left;">
+<div class="document">
+<div class="body">
+<div class="section" id="pypy-and-cffi-have-moved-to-heptapod">
+It has been a very busy month, not so much because of deep changes in the JIT of PyPy but more around the development, deployment, and packaging of the project.<br><div class="section" id="hosting">
+<h2>
+<span style="font-size: x-large;"> </span>
+</h2>
+<h2>
+<span style="font-size: x-large;">Hosting</span>
+</h2>
+The biggest news is that we have moved the center of our development off Bitbucket and to the new <a class="reference external" href="https://foss.heptapod.net/pypy">https://foss.heptapod.net/pypy</a>. This is a friendly fork of Gitlab called <a class="reference external" href="https://heptapod.net/">heptapod</a> that understands Mercurial and is hosted by <a class="reference external" href="https://www.clever-cloud.com/en/heptapod">Clever Cloud</a>. When Atlassian decided to close down Mercurial hosting on bitbucket.org, PyPy debated what to do. Our development model is based on long-lived branches, and we want to keep the ability to immediately see which branch each commit came from. Mercurial has this, git does not (see <a class="reference external" href="https://doc.pypy.org/en/latest/faq.html#why-doesn-t-pypy-use-git-and-move-to-github">our FAQ</a>). <a class="reference external" href="https://octobus.net/">Octobus</a>, whose business is Mercurial, developed a way to use Mercurial with Gitlab called heptapod. The product is still <a class="reference external" href="https://heptapod.net/pages/getting-involved.html">under development</a>, but quite usable (i.e., it doesn't get in the way). Octobus partnered with Clever Cloud hosting to offer community FOSS projects hosted on Bitbucket who wish to remain with Mercurial a new home. PyPy took them up on the offer, and migrated its repos to <a class="reference external" href="https://foss.heptapod.net/pypy">https://foss.heptapod.net/pypy</a>. We were very happy with how smooth it was to import the repos to heptapod/GitLab, and are learning the small differences between Bitbucket and GitLab. All the pull requests, issues, and commits kept the same ids, but work is still being done to attribute the issues, pull requests, and comments to the correct users. So from now on, when you want to contribute to PyPy, you do so at the new home.<br><br>
+CFFI, which previously was also hosted on Bitbucket, has joined the PyPy group at <a class="reference external" href="https://foss.heptapod.net/pypy/cffi">https://foss.heptapod.net/pypy/cffi</a>.</div>
+<div class="section" id="website">
+<h2>
+<span style="font-size: x-large;"> </span>
+</h2>
+<h2>
+<span style="font-size: x-large;">Website</span>
+</h2>
+Secondly, thanks to work by <a class="reference external" href="https://baroquesoftware.com/">https://baroquesoftware.com/</a> in leading a redesign and updating the logo, the <a class="reference external" href="https://www.pypy.org/">https://www.pypy.org</a> website has undergone a facelift. It should now be easier to use on small-screen devices. Thanks also to the PSF for hosting the site.</div>
+<div class="section" id="packaging">
+<h2>
+<span style="font-size: x-large;"> </span>
+</h2>
+<h2>
+<span style="font-size: x-large;">Packaging</span>
+</h2>
+Also, building PyPy from source takes a fair amount of time. While we provide downloads in the form of tarballs or zipfiles, and some platforms such as debian and Homebrew provide packages, traditionally the downloads have only worked on a specific flavor of operating system. A few years ago squeaky-pl started providing <a class="reference external" href="https://github.com/squeaky-pl/portable-pypy">portable builds</a>. We have adopted that build system for our linux offerings, so the <a class="reference external" href="https://buildbot.pypy.org/nightly">nightly downloads</a> and <a class="reference external" href="https://downloads.pypy.org/downloads">release downloads</a> should now work on any glibc platform that has not gone EndOfLife. So there goes another excuse not to use PyPy. And the "but does it run scipy" excuse also no longer holds, although "does it speed up scipy" still has the wrong answer. For that we are working on <a class="reference external" href="https://morepypy.blogspot.com/2019/12/hpy-kick-off-sprint-report.html">HPy</a>, and will be <a class="reference external" href="https://morepypy.blogspot.com/2020/01/leysin-winter-sprint-2020-feb-28-march.html">sprinting soon</a>.<br>
+The latest versions of pip, wheel, and setuptools, together with the manylinux2010 standard for linux wheels and tools such as <a class="reference external" href="https://github.com/matthew-brett/multibuild/">multibuild</a> or <a class="reference external" href="https://github.com/joerick/cibuildwheel">cibuildwheels</a> (well, from the next version) make it easier for library developers to build binary wheels for PyPy. If you are having problems getting going with this, please reach out.</div>
+</div>
+<div class="section" id="give-it-a-try">
+<h2 style="text-align: left;">
+<span style="font-size: x-large;"> </span>
+</h2>
+<h2 style="text-align: left;">
+<span style="font-size: x-large;">Give it a try</span>
+</h2>
+Thanks to all the folks who provide the infrastructure PyPy depends on. We hope the new look will encourage more involvement and engagement. Help prove us right!<br><br>
+The PyPy Team</div>
+</div>
+</div>
+</div>
+    </div>
+    </article><div class="comment-level comment-level-1">
+      <div class="comment comment-8593475061965265364">
+        <div class="comment-header">
+          <a name="comment-8593475061965265364"></a>
+            <span class="author">Matěj Cepl</span> wrote on <span class="date">2020-02-16 21:20</span>:
+        </div>
+        <div class="comment-content">
+          <p>Could you elaborate on “this is not always possible with Git”, please? This is too brief statement for my taste, and it doesn't make much sense (merging a branch certainly doesn't make it go away, and it is certainly possible to find to which branch a commit used to belong before merging).</p>
+        </div>
+      </div>
+      <div class="comment comment-3334434925703288005">
+        <div class="comment-header">
+          <a name="comment-3334434925703288005"></a>
+            <span class="author">Armin Rigo</span> wrote on <span class="date">2020-02-16 22:35</span>:
+        </div>
+        <div class="comment-content">
+          <p>https://doc.pypy.org/en/latest/faq.html#why-doesn-t-pypy-use-git-and-move-to-github</p>
+        </div>
+      </div>
+      <div class="comment comment-8075281165032634114">
+        <div class="comment-header">
+          <a name="comment-8075281165032634114"></a>
+            <span class="author">Miro Hrončok</span> wrote on <span class="date">2020-02-18 07:25</span>:
+        </div>
+        <div class="comment-content">
+          <p>Were issue attachments migrated properly?</p>
+        </div>
+      </div>
+      <div class="comment comment-7212091686312392981">
+        <div class="comment-header">
+          <a name="comment-7212091686312392981"></a>
+            <span class="author">mattip</span> wrote on <span class="date">2020-02-19 07:34</span>:
+        </div>
+        <div class="comment-content">
+          <p>&gt; Were issue attachments migrated properly? <br><br>No. They should be migrated in a follow-up. Here is the heptapod issue about attachments https://foss.heptapod.net/heptapod/foss.heptapod.net/issues/37</p>
+        </div>
+      </div>
+      <div class="comment comment-7524732571223644941">
+        <div class="comment-header">
+          <a name="comment-7524732571223644941"></a>
+            <span class="author">Carl Friedrich Bolz-Tereick</span> wrote on <span class="date">2020-02-19 08:19</span>:
+        </div>
+        <div class="comment-content">
+          <p>I deleted one anonymous comment that was insulting the project decision. Please make your points constructively or don't make them.</p>
+        </div>
+      </div>
+         </div>
+
+    <article class="h-entry post-text" itemscope="itemscope" itemtype="http://schema.org/Article"><header><h1 class="p-name entry-title"><a href="../posts/2020/01/leysin-winter-sprint-2020-feb-28-march-6349761524797409012.html" class="u-url">Leysin Winter sprint 2020: Feb 29 - March 8th</a></h1>
+        <div class="metadata">
+            <p class="byline author vcard"><span class="byline-name fn" itemprop="author">
+                The PyPy Team
+            </span></p>
+            <p class="dateline">
+            <a href="../posts/2020/01/leysin-winter-sprint-2020-feb-28-march-6349761524797409012.html" rel="bookmark">
+            <time class="published dt-published" datetime="2020-01-17T10:36:00Z" itemprop="datePublished" title="2020-01-17 10:36">2020-01-17 10:36</time></a>
+            </p>
+            <p class="commentline">  No comments
+</p>
+        </div>
+    </header><div class="e-content entry-content">
+    <a href="https://q-cf.bstatic.com/images/hotel/max1280x900/321/32136520.jpg" style="clear: right; float: right; margin-bottom: 1em; margin-left: 1em;"><img border="0" height="240" src="https://q-cf.bstatic.com/images/hotel/max1280x900/321/32136520.jpg" width="320"></a>The next PyPy sprint will be in Leysin, Switzerland, for the fourteenth
+time.  This is a fully public sprint: newcomers and topics other than
+those proposed below are welcome.<br><br><br><br><h3>
+Goals and topics of the sprint</h3>
+The list of topics is open.  For reference, we would like to work at least partially on the following topics:<br><ul>
+<li>
+<a href="https://github.com/pyhandle/hpy">HPy</a> </li>
+<li>Python 3.7 support (<a href="https://buildbot.pypy.org/summary?branch=py3.7">buildbot status</a>)</li>
+</ul>
+As usual, the main side goal is to have fun in winter sports :-)
+We can take a day off (for ski or anything else).<br><br><h3>
+Times and accomodation</h3>
+The sprint will occur for one week starting on Saturday, the 29th of February, to Sunday, the 8th of March 2020 <b>(dates were pushed back one day!)</b>  It will occur in <a href="https://www.booking.com/hotel/ch/les-airelles.html">Les Airelles</a>, a different bed-and-breakfast place from the traditional one in <span class="il">Leysin</span>.  It is a nice old house at the top of the village.<br><br><strike>We have a 4- or 5-people room as well as up to three double-rooms.  Please register early!  These rooms are not booked for the sprint in advance, and might be already taken if you end up announcing yourself late.</strike>  We have a big room for up to 7 people with nice view, which might be split in two or three sub-rooms; plus possibly separately-booked double rooms if needed. (But it is of course always possible to book at a different place in Leysin.)<br><br>
+For more information, see our <a href="https://foss.heptapod.net/pypy/extradoc/-/blob/branch/default/extradoc/sprintinfo/leysin-winter-2020/">repository</a> or write to me directly at armin.rigo@gmail.com.
+    </div>
+    </article><div class="no-comments">No comments.</div>
+
+    <article class="h-entry post-text" itemscope="itemscope" itemtype="http://schema.org/Article"><header><h1 class="p-name entry-title"><a href="../posts/2019/12/pypy-730-released-3614026620096963655.html" class="u-url">PyPy 7.3.0 released</a></h1>
+        <div class="metadata">
+            <p class="byline author vcard"><span class="byline-name fn" itemprop="author">
+                The PyPy Team
+            </span></p>
+            <p class="dateline">
+            <a href="../posts/2019/12/pypy-730-released-3614026620096963655.html" rel="bookmark">
+            <time class="published dt-published" datetime="2019-12-24T13:55:00Z" itemprop="datePublished" title="2019-12-24 13:55">2019-12-24 13:55</time></a>
+            </p>
+            <p class="commentline">  No comments
+</p>
+        </div>
+    </header><div class="e-content entry-content">
+    <div dir="ltr" style="text-align: left;">
+The PyPy team is proud to release the version 7.3.0 of PyPy, which includes
+two different interpreters:<br><ul class="simple">
+<li>PyPy2.7, which is an interpreter supporting the syntax and the features of
+Python 2.7 including the stdlib for CPython 2.7.13</li>
+<li>PyPy3.6: which is an interpreter supporting the syntax and the features of
+Python 3.6, including the stdlib for CPython 3.6.9.</li>
+</ul>
+<blockquote>
+<div>
+</div>
+</blockquote>
+The interpreters are based on much the same codebase, thus the double
+release.<br><br>
+We have worked with the python packaging group to support tooling around
+building third party packages for python, so this release changes the ABI tag
+for PyPy.<br><br>
+Based on the great work done in <a class="reference external" href="https://github.com/squeaky-pl/portable-pypy">portable-pypy</a>, the linux downloads we
+provide are now built on top of the <a href="https://github.com/pypa/manylinux"><span class="problematic" id="id11">manylinux2010</span></a> CentOS6 docker image.
+The tarballs include the needed shared objects to run on any platform that
+supports manylinux2010 wheels, which should include all supported versions of
+debian- and RedHat-based distributions (including Ubuntu, CentOS, and Fedora).<br><br>
+The <a class="reference external" href="https://cffi.readthedocs.io/">CFFI</a> backend has been updated to version 1.13.1. We recommend using CFFI
+rather than c-extensions to interact with C.<br>
+
+The built-in <a href="https://cppyy.readthedocs.io/en/latest/"><code class="docutils literal notranslate"><span class="pre">cppyy</span></code></a> module was upgraded to 1.10.6, which
+provides, among others, better template resolution, stricter <code class="docutils literal notranslate"><span class="pre">enum</span></code> handling,
+anonymous struct/unions, cmake fragments for distribution, optimizations for
+PODs, and faster wrapper calls. We reccomend using <a class="reference external" href="https://cppyy.readthedocs.io/">cppyy</a> for performant
+wrapping of C++ code for Python.<br><br>
+The vendored pyrepl package for interaction inside the REPL was updated.<br><br>
+Support for codepage encoding and decoding was added for Windows.<br><br>
+As always, this release fixed several issues and bugs raised by the growing
+community of PyPy users.  We strongly recommend updating. Many of the fixes are
+the direct result of end-user bug reports, so please continue reporting issues
+as they crop up.<br>
+
+You can download the v7.3 releases here:<br><blockquote>
+<div>
+<a class="reference external" href="https://pypy.org/download.html">https://pypy.org/download.html</a>
+</div>
+</blockquote>
+We would like to thank our donors for the continued support of the PyPy
+project. If PyPy is not quite good enough for your needs, we are available for
+direct consulting work.<br><br>
+We would also like to thank our contributors and encourage new people to join
+the project. PyPy has many layers and we need help with all of them: <a class="reference external" href="https://doc.pypy.org/en/latest/index.html">PyPy</a>
+and <a class="reference external" href="https://rpython.readthedocs.org/">RPython</a> documentation improvements, tweaking popular packages to run
+on pypy, or general <a class="reference external" href="https://doc.pypy.org/en/latest/project-ideas.html">help</a> with making RPython’s JIT even better. Since the
+previous release, we have accepted contributions from 3 new contributors,
+thanks for pitching in.<br><br>
+If you are a python library maintainer and use c-extensions, please consider making a cffi / cppyy version of your library that would be performant on PyPy. If you are stuck with using the C-API, you can use <a href="https://github.com/pypy/manylinux">docker images with PyPy built in</a> or the <a href="https://github.com/matthew-brett/multibuild/">multibuild system</a> to build wheels.<br><br><div class="section" id="what-is-pypy">
+<h2 style="text-align: center;">
+<span style="font-size: x-large;">What is PyPy?</span>
+</h2>
+PyPy is a very compliant Python interpreter, almost a drop-in replacement for
+CPython 2.7, 3.6. It’s fast (<a class="reference external" href="https://speed.pypy.org/">PyPy and CPython 2.7.x</a> performance
+comparison) due to its integrated tracing JIT compiler.<br><br>
+We also welcome developers of other <a class="reference external" href="https://rpython.readthedocs.io/en/latest/examples.html">dynamic languages</a> to see what RPython
+can do for them.<br><br>
+This PyPy release supports:<br><ul style="text-align: left;">
+<li>
+<b>x86</b> machines on most common operating systems
+(Linux 32/64 bit, Mac OS X 64-bit, Windows 32-bit, OpenBSD, FreeBSD)</li>
+</ul>
+</div>
+<div class="section" id="what-is-pypy">
+<ul style="text-align: left;">
+<li>big- and little-endian variants of <b>PPC64</b> running Linux<b> </b>
+</li>
+</ul>
+</div>
+<div class="section" id="what-is-pypy">
+<ul style="text-align: left;">
+<li>
+<b>s390x</b> running Linux</li>
+</ul>
+</div>
+<div class="section" id="what-is-pypy">
+<ul style="text-align: left;">
+<li>64-bit <b>ARM</b> machines running Linux</li>
+</ul>
+Unfortunately at the moment of writing our ARM buildbots are out of service,
+so for now we are <b>not</b> releasing any binary for the ARM architecture (32-bit), although PyPy does support ARM 32-bit processors.<br><br><div class="section" id="changelog">
+<h2 style="text-align: center;">
+<span style="font-size: x-large;">What else is new?</span>
+</h2>
+PyPy 7.2 was released in October, 2019.
+There are many incremental improvements to RPython and PyPy, For more information about the 7.3.0 release, see the full <a href="https://pypy.readthedocs.io/en/latest/release-v7.3.0.html">changelog</a>.<br><br>
+Please update, and continue to help us make PyPy better.<br><br>
+Cheers,<br>
+The PyPy team
+</div>
+<br><br>
+</div>
+</div>
+    </div>
+    </article><div class="no-comments">No comments.</div>
+
+</div>
+</div>
+<div class="sidebar">
+<div>
+  <h2>
+    The PyPy blogposts
+  </h2>
+  <div>
+    Create a guest post via a PR to the <a href="https://github.com/pypy/pypy.org">source repo</a>
+  </div>
+</div>
+    <div id="global-recent-posts">
+    <h2>
+      Recent Posts
+    </h2>
+    <ul class="post-list">
+      <li>
+        <a href="/posts/2020/12/mac-meets-arm64-940822335619099039.html" class="listtitle">Mac meets Arm64</a>
+      </li>
+      <li>
+        <a href="/posts/2020/11/pypy-733-triple-release-python-37-36-3446596804408262749.html" class="listtitle">PyPy 7.3.3 triple release: python 3.7, 3.6, and 2.7</a>
+      </li>
+      <li>
+        <a href="/posts/2020/09/pypy-732-triple-release-python-27-36-3980901335490872787.html" class="listtitle">PyPy 7.3.2 triple release: python 2.7, 3.6, and 3.7</a>
+      </li>
+      <li>
+        <a href="/posts/2020/08/pypy-is-on-open-collective-5673322428814364737.html" class="listtitle">PyPy is on Open Collective</a>
+      </li>
+      <li>
+        <a href="/posts/2020/08/a-new-chapter-for-pypy-8388322709667328389.html" class="listtitle">A new chapter for PyPy</a>
+      </li>
+      <li>
+        <a href="/posts/2020/04/pypy-731-released-6266451647387657480.html" class="listtitle">PyPy 7.3.1 released</a>
+      </li>
+      <li>
+        <a href="/posts/2020/03/leysin-2020-sprint-report-764567777353955897.html" class="listtitle">Leysin 2020 Sprint Report</a>
+      </li>
+      <li>
+        <a href="/posts/2020/02/pypy-and-cffi-have-moved-to-heptapod-5791595152472747032.html" class="listtitle">PyPy and CFFI have moved to Heptapod</a>
+      </li>
+      <li>
+        <a href="/posts/2020/01/leysin-winter-sprint-2020-feb-28-march-6349761524797409012.html" class="listtitle">Leysin Winter sprint 2020: Feb 29 - March 8th</a>
+      </li>
+      <li>
+        <a href="/posts/2019/12/pypy-730-released-3614026620096963655.html" class="listtitle">PyPy 7.3.0 released</a>
+      </li>
+    </ul>
+  </div>
+
+          <div id="global-archive-list">
+          <h2>
+            Archives
+          </h2>
+          <ul class="archive-level archive-level-1">
+            <li><a class="reference" href="/2007/">2007</a> (19)
+            </li>
+            <li><a class="reference" href="/2008/">2008</a> (62)
+            </li>
+            <li><a class="reference" href="/2009/">2009</a> (38)
+            </li>
+            <li><a class="reference" href="/2010/">2010</a> (44)
+            </li>
+            <li><a class="reference" href="/2011/">2011</a> (43)
+            </li>
+            <li><a class="reference" href="/2012/">2012</a> (44)
+            </li>
+            <li><a class="reference" href="/2013/">2013</a> (46)
+            </li>
+            <li><a class="reference" href="/2014/">2014</a> (22)
+            </li>
+            <li><a class="reference" href="/2015/">2015</a> (20)
+            </li>
+            <li><a class="reference" href="/2016/">2016</a> (20)
+            </li>
+            <li><a class="reference" href="/2017/">2017</a> (13)
+            </li>
+            <li><a class="reference" href="/2018/">2018</a> (12)
+            </li>
+            <li><a class="reference" href="/2019/">2019</a> (12)
+            </li>
+            <li><a class="reference" href="/2020/">2020</a> (9)
+            </li>
+          </ul>
+        </div>
+
+
+          <div id="global-tag-list">
+          <h2>
+            Tags
+          </h2>
+          <ul>
+            <li><a class="reference" href="/categories/arm.html">arm</a> (1)</li>
+            <li><a class="reference" href="/categories/cli.html">cli</a> (1)</li>
+            <li><a class="reference" href="/categories/compiler.html">compiler</a> (1)</li>
+            <li><a class="reference" href="/categories/cpyext.html">cpyext</a> (3)</li>
+            <li><a class="reference" href="/categories/cpython.html">CPython</a> (3)</li>
+            <li><a class="reference" href="/categories/ep2008.html">ep2008</a> (1)</li>
+            <li><a class="reference" href="/categories/extension-modules.html">extension modules</a> (2)</li>
+            <li><a class="reference" href="/categories/graalpython.html">GraalPython</a> (1)</li>
+            <li><a class="reference" href="/categories/hpy.html">hpy</a> (1)</li>
+            <li><a class="reference" href="/categories/heptapod.html">Heptapod</a> (1)</li>
+            <li><a class="reference" href="/categories/jit.html">jit</a> (18)</li>
+            <li><a class="reference" href="/categories/jython.html">jython</a> (1)</li>
+            <li><a class="reference" href="/categories/kcachegrind.html">kcachegrind</a> (1)</li>
+            <li><a class="reference" href="/categories/numpy.html">numpy</a> (24)</li>
+            <li><a class="reference" href="/categories/parser.html">parser</a> (1)</li>
+            <li><a class="reference" href="/categories/profiling.html">profiling</a> (1)</li>
+            <li><a class="reference" href="/categories/pypy.html">pypy</a> (6)</li>
+            <li><a class="reference" href="/categories/pypy3.html">pypy3</a> (16)</li>
+            <li><a class="reference" href="/categories/pyqt4.html">PyQt4</a> (1)</li>
+            <li><a class="reference" href="/categories/release.html">release</a> (47)</li>
+            <li><a class="reference" href="/categories/releasecffi.html">releasecffi</a> (3)</li>
+            <li><a class="reference" href="/categories/releasepypy.html">releasepypy</a> (1)</li>
+            <li><a class="reference" href="/categories/releaserevdb.html">releaserevdb</a> (1)</li>
+            <li><a class="reference" href="/categories/releasestm.html">releasestm</a> (1)</li>
+            <li><a class="reference" href="/categories/revdb.html">revdb</a> (1)</li>
+            <li><a class="reference" href="/categories/roadmap.html">roadmap</a> (1)</li>
+            <li><a class="reference" href="/categories/rpyc.html">RPyC</a> (1)</li>
+            <li><a class="reference" href="/categories/speed.html">speed</a> (3)</li>
+            <li><a class="reference" href="/categories/sprint.html">sprint</a> (3)</li>
+            <li><a class="reference" href="/categories/stm.html">stm</a> (14)</li>
+            <li><a class="reference" href="/categories/sun.html">sun</a> (1)</li>
+            <li><a class="reference" href="/categories/smalltalk.html">Smalltalk</a> (1)</li>
+            <li><a class="reference" href="/categories/squeak.html">Squeak</a> (1)</li>
+            <li><a class="reference" href="/categories/unicode.html">unicode</a> (1)</li>
+            <li><a class="reference" href="/categories/valgrind.html">valgrind</a> (1)</li>
+          </ul>
+        </div></div>
+</main>
+</div>
+<div style="clear: both; width: 75%; margin: 1em auto;">
+        <nav class="postindexpager"><ul class="pager">
+<li class="next">
+                <a href="index-40.html" rel="next">Older posts</a>
+            </li>
+        </ul></nav>
+</div>
+         
+                 <footer id="footer"><p>
+</p>
+<div class="myfooter">
+  <div>
+    <img src="../images/pypy-logo-nav-grey.png" alt="PyPy Logo">
+</div>
+  <div class="logotext">
+     Contents © 2021 <a href="mailto:pypy-dev@pypy.org">The PyPy Team</a>
+    Powered by <a href="https://getnikola.com" rel="nofollow">Nikola</a> 
+  </div>
+  <div style="margin-left: auto">
+  <a href="rss.xml">RSS feed</a>
+</div>
+
+            
+        
+
+    </div>
+            <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js" crossorigin="anonymous"></script><script src="../assets/js/styles.js"></script></footer>
+</body>
+</html>

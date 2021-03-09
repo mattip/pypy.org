@@ -1,0 +1,799 @@
+<?xml version="1.0" encoding="utf-8"?>
+<?xml-stylesheet type="text/xsl" href="../assets/xml/rss.xsl" media="all"?><rss version="2.0" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>PyPy (Posts about release)</title><link>https://www.pypy.org/</link><description></description><atom:link href="https://www.pypy.org/categories/release.xml" rel="self" type="application/rss+xml"></atom:link><language>en</language><copyright>Contents © 2021 &lt;a href="mailto:pypy-dev@pypy.org"&gt;The PyPy Team&lt;/a&gt; </copyright><lastBuildDate>Tue, 09 Mar 2021 08:48:53 GMT</lastBuildDate><generator>Nikola (getnikola.com)</generator><docs>http://blogs.law.harvard.edu/tech/rss</docs><item><title>PyPy 7.3.3 triple release: python 3.7, 3.6, and 2.7</title><link>https://www.pypy.org/posts/2020/11/pypy-733-triple-release-python-37-36-3446596804408262749.html</link><dc:creator>The PyPy Team</dc:creator><description>&lt;p&gt; The PyPy team is proud to release the version 7.3.3 of PyPy, which includes
+three different interpreters:
+&lt;/p&gt;&lt;blockquote&gt;
+&lt;div&gt;&lt;ul class="simple"&gt;&lt;li&gt;PyPy2.7, which is an interpreter supporting the syntax and the features of
+Python 2.7 including the stdlib for CPython 2.7.18 (updated from the
+previous version)&lt;/li&gt;&lt;li&gt;PyPy3.6: which is an interpreter supporting the syntax and the features of
+Python 3.6, including the stdlib for CPython 3.6.12 (updated from the
+previous version).&lt;/li&gt;&lt;li&gt;PyPy3.7 beta: which is our second release of an interpreter supporting the
+syntax and the features of Python 3.7, including the stdlib for CPython
+3.7.9. We call this beta quality software, there may be issues about
+compatibility with new and changed features in CPython 3.7.
+Please let us know what is broken or missing. We have not implemented the
+&lt;a class="reference external" href="https://docs.python.org/3/whatsnew/3.7.html#re"&gt;documented changes&lt;/a&gt; in the &lt;code class="docutils literal notranslate"&gt;&lt;span class="pre"&gt;re&lt;/span&gt;&lt;/code&gt; module, and a few other pieces are also
+missing. For more information, see the &lt;a class="reference external" href="https://foss.heptapod.net/pypy/pypy/-/wikis/py3.7%20status"&gt;PyPy 3.7 wiki&lt;/a&gt; page&lt;/li&gt;&lt;/ul&gt;
+&lt;/div&gt;&lt;/blockquote&gt;
+&lt;p&gt;The interpreters are based on much the same codebase, thus the multiple
+release. This is a micro release, all APIs are compatible with the 7.3
+releases, but read on to find out what is new.&lt;/p&gt;
+&lt;p&gt;Several issues found in the 7.3.2 release were fixed. Many of them came from the
+great work by &lt;a class="reference external" href="https://conda-forge.org/blog//2020/03/10/pypy"&gt;conda-forge&lt;/a&gt; to ship PyPy binary packages.  A big shout out
+to them for taking this on.&lt;/p&gt;
+&lt;p&gt;Development of PyPy has moved to &lt;a class="reference external" href="https://foss.heptapod.net/pypy/pypy"&gt;https://foss.heptapod.net/pypy/pypy&lt;/a&gt;.
+This was covered more extensively in this &lt;a class="reference external" href="https://morepypy.blogspot.com/2020/02/pypy-and-cffi-have-moved-to-heptapod.html"&gt;blog post&lt;/a&gt;. We have seen an
+increase in the number of drive-by contributors who are able to use gitlab +
+mercurial to create merge requests.&lt;/p&gt;
+&lt;p&gt;The &lt;a class="reference external" href="https://cffi.readthedocs.io"&gt;CFFI&lt;/a&gt; backend has been updated to version 1.14.3. We recommend using CFFI
+rather than c-extensions to interact with C, and using &lt;a class="reference external" href="https://cppyy.readthedocs.io"&gt;cppyy&lt;/a&gt; for performant
+wrapping of C++ code for Python.&lt;/p&gt;
+&lt;p&gt;A new contributor took us up on the challenge to get &lt;a href="https://doc.pypy.org/en/latest/windows.html#what-is-missing-for-a-full-64-bit-translation"&gt;windows 64-bit&lt;/a&gt; support.
+The work is proceeding on the &lt;code class="docutils literal notranslate"&gt;&lt;span class="pre"&gt;win64&lt;/span&gt;&lt;/code&gt; branch, more help in coding or
+sponsorship is welcome. In anticipation of merging this large change, we fixed
+many test failures on windows.&lt;/p&gt;
+&lt;p&gt;As always, this release fixed several issues and bugs.  We strongly recommend
+updating. Many of the fixes are the direct result of end-user bug reports, so
+please continue reporting issues as they crop up.&lt;/p&gt;
+&lt;p&gt;You can find links to download the v7.3.3 releases here:&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;div&gt;&lt;a class="reference external" href="https://pypy.org/download.html"&gt;https://pypy.org/download.html&lt;/a&gt;&lt;/div&gt;&lt;/blockquote&gt;
+&lt;p&gt;We would like to thank our &lt;a href="https://opencollective.com/pypy"&gt;donors&lt;/a&gt; for the continued support of the PyPy
+project. If PyPy is not quite good enough for your needs, we are available for
+direct consulting work.&lt;/p&gt;
+&lt;p&gt;We would also like to thank our contributors and encourage new people to join
+the project. PyPy has many layers and we need help with all of them: &lt;a class="reference external" href="https://doc.pypy.org/en/latest/index.html"&gt;PyPy&lt;/a&gt;
+and &lt;a class="reference external" href="https://rpython.readthedocs.org"&gt;RPython&lt;/a&gt; documentation improvements, tweaking popular modules to run
+on pypy, or general &lt;a class="reference external" href="https://doc.pypy.org/en/latest/project-ideas.html"&gt;help&lt;/a&gt; with making RPython’s JIT even better. Since the
+previous release, we have accepted contributions from 2 new contributors,
+thanks for pitching in.&lt;/p&gt;
+&lt;p&gt;If you are a python library maintainer and use c-extensions, please consider
+making a cffi / cppyy version of your library that would be performant on PyPy.
+In any case both &lt;a class="reference external" href="https://github.com/joerick/cibuildwheel"&gt;cibuildwheel&lt;/a&gt; and the &lt;a class="reference external" href="https://github.com/matthew-brett/multibuild"&gt;multibuild system&lt;/a&gt; support
+building wheels for PyPy.&lt;/p&gt;
+&lt;div class="section" id="what-is-pypy"&gt;
+&lt;h2 style="text-align: center;"&gt;&lt;span style="font-size: x-large;"&gt;What is PyPy?&lt;/span&gt;&lt;/h2&gt;
+&lt;p&gt;PyPy is a Python interpreter, a drop-in replacement for CPython 2.7, 3.6, and
+3.7. It’s fast (&lt;a class="reference external" href="https://speed.pypy.org"&gt;PyPy and CPython 3.7.4&lt;/a&gt; performance
+comparison) due to its integrated tracing JIT compiler.&lt;/p&gt;
+&lt;p&gt;We also welcome developers of other &lt;a class="reference external" href="https://rpython.readthedocs.io/en/latest/examples.html"&gt;dynamic languages&lt;/a&gt; to see what RPython
+can do for them.&lt;/p&gt;
+&lt;p&gt;This PyPy release supports:&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;div&gt;&lt;ul class="simple"&gt;&lt;li&gt;&lt;b&gt;x86&lt;/b&gt; machines on most common operating systems
+(Linux 32/64 bits, Mac OS X 64 bits, Windows 32 bits, OpenBSD, FreeBSD)&lt;/li&gt;&lt;li&gt;big- and little-endian variants of &lt;b&gt;PPC64&lt;/b&gt; running Linux,&lt;/li&gt;&lt;li&gt;&lt;b&gt;s390x&lt;/b&gt; running Linux&lt;/li&gt;&lt;li&gt;64-bit &lt;b&gt;ARM&lt;/b&gt; machines running Linux.&lt;/li&gt;&lt;/ul&gt;
+&lt;/div&gt;&lt;/blockquote&gt;
+&lt;p&gt;PyPy does support ARM 32 bit processors, but does not release binaries.&lt;/p&gt;&lt;p&gt; &lt;/p&gt;&lt;h2 style="text-align: center;"&gt;
+&lt;span style="font-size: x-large;"&gt;What else is new?&lt;/span&gt;&lt;/h2&gt;
+For more information about the 7.3.3 release, see the full &lt;a href="https://doc.pypy.org/en/latest/release-v7.3.3.html"&gt;changelog&lt;/a&gt;.&lt;br&gt;
+&lt;br&gt;
+Please update, and continue to help us make PyPy better.&lt;br&gt;
+&lt;br&gt;
+Cheers,&lt;br&gt;
+The PyPy team
+&lt;p&gt; &lt;/p&gt;
+&lt;/div&gt;</description><category>release</category><guid>https://www.pypy.org/posts/2020/11/pypy-733-triple-release-python-37-36-3446596804408262749.html</guid><pubDate>Sat, 21 Nov 2020 19:32:00 GMT</pubDate></item><item><title>PyPy 7.3.2 triple release: python 2.7, 3.6, and 3.7</title><link>https://www.pypy.org/posts/2020/09/pypy-732-triple-release-python-27-36-3980901335490872787.html</link><dc:creator>The PyPy Team</dc:creator><description>&lt;p&gt; &lt;/p&gt;&lt;div style="text-align: left;"&gt;The PyPy team is proud to release version 7.3.2 of PyPy, which includes
+three different interpreters:
+&lt;/div&gt;&lt;blockquote&gt;
+&lt;/blockquote&gt;&lt;ul style="text-align: left;"&gt;&lt;li&gt;PyPy2.7, which is an interpreter supporting the syntax and the features of
+Python 2.7 including the stdlib for CPython 2.7.13&lt;/li&gt;&lt;li&gt;PyPy3.6: which is an interpreter supporting the syntax and the features of
+Python 3.6, including the stdlib for CPython 3.6.9.&lt;/li&gt;&lt;li&gt;PyPy3.7 alpha: which is our first release of an interpreter supporting the
+syntax and the features of Python 3.7, including the stdlib for CPython
+3.7.9. We call this an alpha release since it is our first. It is based off PyPy 3.6 so
+issues should be around compatibility and not stability. Please try it out
+and let us know what is broken or missing. We have not implemented some of the
+&lt;a class="reference external" href="https://docs.python.org/3/whatsnew/3.7.html#re"&gt;documented changes&lt;/a&gt; in the &lt;code class="docutils literal notranslate"&gt;&lt;span class="pre"&gt;re&lt;/span&gt;&lt;/code&gt; module, and other pieces are also
+missing. For more information, see the &lt;a class="reference external" href="https://foss.heptapod.net/pypy/pypy/-/wikis/py3.7%20status"&gt;PyPy 3.7 wiki&lt;/a&gt; page&lt;/li&gt;&lt;/ul&gt;&lt;blockquote&gt;&lt;div&gt;
+&lt;/div&gt;&lt;/blockquote&gt;
+&lt;p&gt;The interpreters are based on much the same codebase, thus the multiple
+release. This is a micro release, all APIs are compatible with the 7.3.0 (Dec
+2019) and 7.3.1 (April 2020) releases, but read on to find out what is new.&lt;/p&gt;
+&lt;p&gt;Conda Forge now &lt;a class="reference external" href="https://conda-forge.org/blog//2020/03/10/pypy"&gt;supports PyPy&lt;/a&gt; as a python interpreter. The support is quite
+complete for linux and macOS. This is the result of a lot of
+hard work and good will on the part of the Conda Forge team.  A big shout out
+to them for taking this on.&lt;/p&gt;
+&lt;p&gt;Development of PyPy has transitioning to &lt;a class="reference external" href="https://foss.heptapod.net/pypy/pypy"&gt;https://foss.heptapod.net/pypy/pypy&lt;/a&gt;.
+This move was covered more extensively in this &lt;a class="reference external" href="https://morepypy.blogspot.com/2020/02/pypy-and-cffi-have-moved-to-heptapod.html"&gt;blog post&lt;/a&gt;. We have seen an
+increase in the number of drive-by contributors who are able to use gitlab +
+mercurial to create merge requests.&lt;/p&gt;
+&lt;p&gt;The &lt;a class="reference external" href="https://cffi.readthedocs.io"&gt;CFFI&lt;/a&gt; backend has been updated to version 1.14.2. We recommend using CFFI
+rather than c-extensions to interact with C, and using &lt;a class="reference external" href="https://cppyy.readthedocs.io"&gt;cppyy&lt;/a&gt; for performant
+wrapping of C++ code for Python.&lt;/p&gt;
+&lt;p&gt;NumPy has begun shipping wheels on PyPI for PyPy, currently for linux 64-bit
+only.  Wheels for PyPy windows will be available from the next NumPy release. Thanks to NumPy for their support.&lt;br&gt;&lt;/p&gt;
+&lt;p&gt;A new contributor took us up on the challenge to get windows 64-bit support.
+The work is proceeding on the &lt;code class="docutils literal notranslate"&gt;&lt;span class="pre"&gt;win64&lt;/span&gt;&lt;/code&gt; branch, more help in coding or
+sponsorship is welcome.&lt;/p&gt;
+&lt;p&gt;As always, this release fixed several issues and bugs.  We strongly recommend
+updating. Many of the fixes are the direct result of end-user bug reports, so
+please continue reporting issues as they crop up.&lt;/p&gt;&lt;p&gt;You can find links to download the v7.3.2 releases here:&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;div&gt;&lt;a class="reference external" href="https://pypy.org/download.html"&gt;https://pypy.org/download.html&lt;/a&gt;&lt;/div&gt;&lt;/blockquote&gt;
+&lt;p&gt;We would like to thank our donors for the continued support of the PyPy
+project. Please help support us at &lt;a href="https://opencollective.com/pypy#section-contribute" target="_blank"&gt;Open Collective&lt;/a&gt;. If PyPy is not yet good enough for your needs, we are available for
+direct consulting work.&lt;br&gt;&lt;/p&gt;
+&lt;p&gt;We would also like to thank our contributors and encourage new people to join
+the project. PyPy has many layers and we need help with all of them: &lt;a class="reference external" href="https://doc.pypy.org/en/latest/index.html"&gt;PyPy&lt;/a&gt;
+and &lt;a class="reference external" href="https://rpython.readthedocs.org"&gt;RPython&lt;/a&gt; documentation improvements, tweaking popular modules to run
+on pypy, or general &lt;a class="reference external" href="https://doc.pypy.org/en/latest/project-ideas.html"&gt;help&lt;/a&gt; with making RPython’s JIT even better. Since the
+previous release, we have accepted contributions from 8 new contributors,
+thanks for pitching in.&lt;/p&gt;
+&lt;p&gt;If you are a python library maintainer and use c-extensions, please consider
+making a cffi / cppyy version of your library that would be performant on PyPy.
+In any case both &lt;a class="reference external" href="https://github.com/joerick/cibuildwheel"&gt;cibuildwheel&lt;/a&gt; and the &lt;a class="reference external" href="https://github.com/matthew-brett/multibuild"&gt;multibuild system&lt;/a&gt; support
+building wheels for PyPy.&lt;/p&gt;
+&lt;div class="section" id="what-is-pypy"&gt;
+&lt;h2 style="text-align: center;"&gt;What is PyPy?&lt;/h2&gt;
+&lt;p&gt;PyPy is a very compliant Python interpreter, almost a drop-in replacement for
+CPython 2.7, 3.6, and 3.7. It’s fast (&lt;a class="reference external" href="https://speed.pypy.org"&gt;PyPy and CPython 2.7.x&lt;/a&gt; performance
+comparison) due to its integrated tracing JIT compiler.&lt;/p&gt;
+&lt;p&gt;We also welcome developers of other &lt;a class="reference external" href="https://rpython.readthedocs.io/en/latest/examples.html"&gt;dynamic languages&lt;/a&gt; to see what RPython
+can do for them.&lt;/p&gt;
+&lt;p&gt;This PyPy release supports:&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;div&gt;&lt;ul class="simple"&gt;&lt;li&gt;&lt;b&gt;x86&lt;/b&gt; machines on most common operating systems
+(Linux 32/64 bits, Mac OS X 64 bits, Windows 32 bits, OpenBSD, FreeBSD)&lt;/li&gt;&lt;li&gt;big- and little-endian variants of &lt;b&gt;PPC64&lt;/b&gt; running Linux,&lt;/li&gt;&lt;li&gt;&lt;b&gt;s390x&lt;/b&gt; running Linux&lt;/li&gt;&lt;li&gt;64-bit &lt;b&gt;ARM&lt;/b&gt; machines running Linux.&lt;/li&gt;&lt;/ul&gt;
+&lt;/div&gt;&lt;/blockquote&gt;
+&lt;p&gt;PyPy does support ARM 32 bit processors, but does not release binaries.&lt;/p&gt;
+&lt;/div&gt;
+
+&lt;div class="section" id="changelog"&gt;
+&lt;h2 style="text-align: center;"&gt;
+&lt;span style="font-size: x-large;"&gt;What else is new?&lt;/span&gt;&lt;/h2&gt;
+For more information about the 7.3.2 release, see the full &lt;a href="https://pypy.readthedocs.io/en/latest/release-v7.3.2.html"&gt;changelog&lt;/a&gt;.&lt;br&gt;
+&lt;br&gt;
+Please update, and continue to help us make PyPy better.&lt;br&gt;
+&lt;br&gt;
+Cheers,&lt;br&gt;
+The PyPy team
+&lt;/div&gt;
+&lt;p&gt; &lt;/p&gt;&lt;p&gt; &lt;/p&gt;</description><category>release</category><guid>https://www.pypy.org/posts/2020/09/pypy-732-triple-release-python-27-36-3980901335490872787.html</guid><pubDate>Fri, 25 Sep 2020 06:45:00 GMT</pubDate></item><item><title>PyPy 7.3.0 released</title><link>https://www.pypy.org/posts/2019/12/pypy-730-released-3614026620096963655.html</link><dc:creator>The PyPy Team</dc:creator><description>&lt;div dir="ltr" style="text-align: left;"&gt;
+The PyPy team is proud to release the version 7.3.0 of PyPy, which includes
+two different interpreters:&lt;br&gt;
+&lt;ul class="simple"&gt;
+&lt;li&gt;PyPy2.7, which is an interpreter supporting the syntax and the features of
+Python 2.7 including the stdlib for CPython 2.7.13&lt;/li&gt;
+&lt;li&gt;PyPy3.6: which is an interpreter supporting the syntax and the features of
+Python 3.6, including the stdlib for CPython 3.6.9.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;blockquote&gt;
+&lt;div&gt;
+&lt;/div&gt;
+&lt;/blockquote&gt;
+The interpreters are based on much the same codebase, thus the double
+release.&lt;br&gt;
+
+&lt;br&gt;
+We have worked with the python packaging group to support tooling around
+building third party packages for python, so this release changes the ABI tag
+for PyPy.&lt;br&gt;
+
+&lt;br&gt;
+Based on the great work done in &lt;a class="reference external" href="https://github.com/squeaky-pl/portable-pypy"&gt;portable-pypy&lt;/a&gt;, the linux downloads we
+provide are now built on top of the &lt;a href="https://github.com/pypa/manylinux"&gt;&lt;span class="problematic" id="id11"&gt;manylinux2010&lt;/span&gt;&lt;/a&gt; CentOS6 docker image.
+The tarballs include the needed shared objects to run on any platform that
+supports manylinux2010 wheels, which should include all supported versions of
+debian- and RedHat-based distributions (including Ubuntu, CentOS, and Fedora).&lt;br&gt;
+
+&lt;br&gt;
+The &lt;a class="reference external" href="https://cffi.readthedocs.io/"&gt;CFFI&lt;/a&gt; backend has been updated to version 1.13.1. We recommend using CFFI
+rather than c-extensions to interact with C.&lt;br&gt;
+
+The built-in &lt;a href="https://cppyy.readthedocs.io/en/latest/"&gt;&lt;code class="docutils literal notranslate"&gt;&lt;span class="pre"&gt;cppyy&lt;/span&gt;&lt;/code&gt;&lt;/a&gt; module was upgraded to 1.10.6, which
+provides, among others, better template resolution, stricter &lt;code class="docutils literal notranslate"&gt;&lt;span class="pre"&gt;enum&lt;/span&gt;&lt;/code&gt; handling,
+anonymous struct/unions, cmake fragments for distribution, optimizations for
+PODs, and faster wrapper calls. We reccomend using &lt;a class="reference external" href="https://cppyy.readthedocs.io/"&gt;cppyy&lt;/a&gt; for performant
+wrapping of C++ code for Python.&lt;br&gt;
+
+&lt;br&gt;
+The vendored pyrepl package for interaction inside the REPL was updated.&lt;br&gt;
+
+&lt;br&gt;
+Support for codepage encoding and decoding was added for Windows.&lt;br&gt;
+
+&lt;br&gt;
+As always, this release fixed several issues and bugs raised by the growing
+community of PyPy users.  We strongly recommend updating. Many of the fixes are
+the direct result of end-user bug reports, so please continue reporting issues
+as they crop up.&lt;br&gt;
+
+You can download the v7.3 releases here:&lt;br&gt;
+
+&lt;blockquote&gt;
+&lt;div&gt;
+&lt;a class="reference external" href="https://pypy.org/download.html"&gt;https://pypy.org/download.html&lt;/a&gt;&lt;/div&gt;
+&lt;/blockquote&gt;
+We would like to thank our donors for the continued support of the PyPy
+project. If PyPy is not quite good enough for your needs, we are available for
+direct consulting work.&lt;br&gt;
+
+&lt;br&gt;
+We would also like to thank our contributors and encourage new people to join
+the project. PyPy has many layers and we need help with all of them: &lt;a class="reference external" href="https://doc.pypy.org/en/latest/index.html"&gt;PyPy&lt;/a&gt;
+and &lt;a class="reference external" href="https://rpython.readthedocs.org/"&gt;RPython&lt;/a&gt; documentation improvements, tweaking popular packages to run
+on pypy, or general &lt;a class="reference external" href="https://doc.pypy.org/en/latest/project-ideas.html"&gt;help&lt;/a&gt; with making RPython’s JIT even better. Since the
+previous release, we have accepted contributions from 3 new contributors,
+thanks for pitching in.&lt;br&gt;
+&lt;br&gt;
+If you are a python library maintainer and use c-extensions, please consider making a cffi / cppyy version of your library that would be performant on PyPy. If you are stuck with using the C-API, you can use &lt;a href="https://github.com/pypy/manylinux"&gt;docker images with PyPy built in&lt;/a&gt; or the &lt;a href="https://github.com/matthew-brett/multibuild/"&gt;multibuild system&lt;/a&gt; to build wheels.&lt;br&gt;
+&lt;br&gt;
+&lt;div class="section" id="what-is-pypy"&gt;
+&lt;h2 style="text-align: center;"&gt;
+&lt;span style="font-size: x-large;"&gt;What is PyPy?&lt;/span&gt;&lt;/h2&gt;
+PyPy is a very compliant Python interpreter, almost a drop-in replacement for
+CPython 2.7, 3.6. It’s fast (&lt;a class="reference external" href="https://speed.pypy.org/"&gt;PyPy and CPython 2.7.x&lt;/a&gt; performance
+comparison) due to its integrated tracing JIT compiler.&lt;br&gt;
+&lt;br&gt;
+We also welcome developers of other &lt;a class="reference external" href="https://rpython.readthedocs.io/en/latest/examples.html"&gt;dynamic languages&lt;/a&gt; to see what RPython
+can do for them.&lt;br&gt;
+&lt;br&gt;
+This PyPy release supports:&lt;br&gt;
+&lt;ul style="text-align: left;"&gt;
+&lt;li&gt;&lt;b&gt;x86&lt;/b&gt; machines on most common operating systems
+(Linux 32/64 bit, Mac OS X 64-bit, Windows 32-bit, OpenBSD, FreeBSD)&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/div&gt;
+&lt;div class="section" id="what-is-pypy"&gt;
+&lt;ul style="text-align: left;"&gt;
+&lt;li&gt;big- and little-endian variants of &lt;b&gt;PPC64&lt;/b&gt; running Linux&lt;b&gt; &lt;/b&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/div&gt;
+&lt;div class="section" id="what-is-pypy"&gt;
+&lt;ul style="text-align: left;"&gt;
+&lt;li&gt;&lt;b&gt;s390x&lt;/b&gt; running Linux&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/div&gt;
+&lt;div class="section" id="what-is-pypy"&gt;
+&lt;ul style="text-align: left;"&gt;
+&lt;li&gt;64-bit &lt;b&gt;ARM&lt;/b&gt; machines running Linux&lt;/li&gt;
+&lt;/ul&gt;
+Unfortunately at the moment of writing our ARM buildbots are out of service,
+so for now we are &lt;b&gt;not&lt;/b&gt; releasing any binary for the ARM architecture (32-bit), although PyPy does support ARM 32-bit processors.&lt;br&gt;
+&lt;br&gt;
+&lt;div class="section" id="changelog"&gt;
+&lt;h2 style="text-align: center;"&gt;
+&lt;span style="font-size: x-large;"&gt;What else is new?&lt;/span&gt;&lt;/h2&gt;
+PyPy 7.2 was released in October, 2019.
+There are many incremental improvements to RPython and PyPy, For more information about the 7.3.0 release, see the full &lt;a href="https://pypy.readthedocs.io/en/latest/release-v7.3.0.html"&gt;changelog&lt;/a&gt;.&lt;br&gt;
+&lt;br&gt;
+Please update, and continue to help us make PyPy better.&lt;br&gt;
+&lt;br&gt;
+Cheers,&lt;br&gt;
+The PyPy team
+&lt;/div&gt;
+&lt;br&gt;
+&lt;br&gt;&lt;/div&gt;
+&lt;/div&gt;</description><category>release</category><guid>https://www.pypy.org/posts/2019/12/pypy-730-released-3614026620096963655.html</guid><pubDate>Tue, 24 Dec 2019 13:55:00 GMT</pubDate></item><item><title>PyPy v7.2 released</title><link>https://www.pypy.org/posts/2019/10/pypy-v72-released-1090406556726313495.html</link><dc:creator>The PyPy Team</dc:creator><description>&lt;div dir="ltr" style="text-align: left;"&gt;
+The PyPy team is proud to release the version 7.2.0 of PyPy, which includes
+two different interpreters:&lt;br&gt;
+&lt;ul style="text-align: left;"&gt;
+&lt;li&gt;PyPy2.7, which is an interpreter supporting the syntax and the features of
+Python 2.7 including the stdlib for CPython 2.7.13&lt;/li&gt;
+&lt;/ul&gt;
+&lt;ul style="text-align: left;"&gt;
+&lt;li&gt;PyPy3.6: which is an interpreter supporting the syntax and the features of
+Python 3.6, including the stdlib for CPython 3.6.9.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;blockquote&gt;
+&lt;div&gt;
+&lt;/div&gt;
+&lt;/blockquote&gt;
+The interpreters are based on much the same codebase, thus the double
+release.&lt;br&gt;
+
+&lt;br&gt;
+As always, this release is 100% compatible with the previous one and fixed
+several issues and bugs raised by the growing community of PyPy users.
+We strongly recommend updating. Many of the fixes are the direct result of
+end-user bug reports, so please continue reporting issues as they crop up.&lt;br&gt;
+
+&lt;br&gt;
+You can download the v7.2 releases here:&lt;br&gt;
+
+&lt;blockquote&gt;
+&lt;div&gt;
+&lt;a class="reference external" href="https://pypy.org/download.html"&gt;https://pypy.org/download.html&lt;/a&gt;&lt;/div&gt;
+&lt;/blockquote&gt;
+With the support of Arm Holdings Ltd. and &lt;a class="reference external" href="https://crossbario.com/"&gt;Crossbar.io&lt;/a&gt;, this release supports
+the 64-bit &lt;code class="docutils literal notranslate"&gt;&lt;span class="pre"&gt;aarch64&lt;/span&gt;&lt;/code&gt; ARM architecture. More about the work and the
+performance data around this welcome development can be found in the &lt;a class="reference external" href="https://morepypy.blogspot.com/2019/07/pypy-jit-for-aarch64.html"&gt;blog
+post&lt;/a&gt;.&lt;br&gt;
+&lt;br&gt;
+
+This release removes the “beta” tag from PyPy3.6. While there may still be some
+small corner-case incompatibilities (around the exact error messages in
+exceptions and the handling of faulty codec errorhandlers) we are happy with
+the quality of the 3.6 series and are looking forward to working on a Python
+3.7 interpreter.&lt;br&gt;
+
+&lt;br&gt;
+We updated our benchmark runner at &lt;a class="reference external" href="https://speed.pypy.org/"&gt;https://speed.pypy.org&lt;/a&gt; to a more modern
+machine and updated the baseline python to CPython 2.7.11. Thanks to &lt;a class="reference external" href="https://baroquesoftware.com/"&gt;Baroque
+Software&lt;/a&gt; for maintaining the benchmark runner.&lt;br&gt;
+
+&lt;br&gt;
+The CFFI-based &lt;code class="docutils literal notranslate"&gt;&lt;span class="pre"&gt;_ssl&lt;/span&gt;&lt;/code&gt; module was backported to PyPy2.7 and updated to use
+&lt;a class="reference external" href="https://cryptography.io/en/latest"&gt;cryptography&lt;/a&gt; version 2.7. Additionally, the &lt;code class="docutils literal notranslate"&gt;&lt;span class="pre"&gt;_hashlib&lt;/span&gt;&lt;/code&gt;, and &lt;code class="docutils literal notranslate"&gt;&lt;span class="pre"&gt;crypt&lt;/span&gt;&lt;/code&gt; (or
+&lt;code class="docutils literal notranslate"&gt;&lt;span class="pre"&gt;_crypt&lt;/span&gt;&lt;/code&gt; on Python3) modules were converted to CFFI. This has two
+consequences: end users and packagers can more easily update these libraries
+for their platform by executing &lt;code class="docutils literal notranslate"&gt;&lt;span class="pre"&gt;(cd&lt;/span&gt; &lt;span class="pre"&gt;lib_pypy;&lt;/span&gt; &lt;span class="pre"&gt;../bin/pypy&lt;/span&gt; &lt;span class="pre"&gt;_*_build.py)&lt;/span&gt;&lt;/code&gt;.
+More significantly, since PyPy itself links to fewer system shared objects
+(DLLs), on platforms with a single runtime namespace like linux, different CFFI
+and c-extension modules can load different versions of the same shared object
+into PyPy without collision (&lt;a class="reference external" href="https://bitbucket.com/pypy/pypy/issues/2617"&gt;issue 2617&lt;/a&gt;).&lt;br&gt;
+
+&lt;br&gt;
+Until downstream providers begin to distribute c-extension builds with PyPy, we
+have made packages for some common packages &lt;a class="reference external" href="https://github.com/antocuni/pypy-wheels"&gt;available as wheels&lt;/a&gt;.&lt;br&gt;
+
+&lt;br&gt;
+The &lt;a class="reference external" href="https://cffi.readthedocs.io/"&gt;CFFI&lt;/a&gt; backend has been updated to version 1.13.0. We recommend using CFFI
+rather than c-extensions to interact with C, and &lt;a class="reference external" href="https://cppyy.readthedocs.io/"&gt;cppyy&lt;/a&gt; for interacting with
+C++ code.&lt;br&gt;
+
+&lt;br&gt;
+Thanks to &lt;a class="reference external" href="https://anvil.works/"&gt;Anvil&lt;/a&gt;, we revived the &lt;a class="reference external" href="https://morepypy.blogspot.com/2019/08"&gt;PyPy Sandbox&lt;/a&gt;, (soon to be released) which allows total control
+over a Python interpreter’s interactions with the external world.&lt;br&gt;
+
+&lt;br&gt;
+We implemented a new JSON decoder that is much faster, uses less memory, and
+uses a JIT-friendly specialized dictionary. More about that in the recent &lt;a href="https://morepypy.blogspot.com/2019/10/pypys-new-json-parser.html"&gt;blog post&lt;/a&gt;&lt;br&gt;
+
+&lt;br&gt;
+We would like to thank our donors for the continued support of the PyPy
+project. If PyPy is not quite good enough for your needs, we are available for
+direct consulting work.
+&lt;br&gt;
+We would also like to thank our contributors and encourage new people to join
+the project. PyPy has many layers and we need help with all of them: &lt;a class="reference external" href="https://pypy.readthedocs.io/en/latest/index.html"&gt;PyPy&lt;/a&gt;
+and &lt;a class="reference external" href="https://rpython.readthedocs.org/"&gt;RPython&lt;/a&gt; documentation improvements, tweaking popular modules to run
+on PyPy, or general &lt;a class="reference external" href="https://pypy.readthedocs.io/en/latest/project-ideas.html"&gt;help&lt;/a&gt; with making RPython’s JIT even better. Since the
+previous release, we have accepted contributions from 27 new contributors,
+so thanks for pitching in.&lt;br&gt;
+&lt;br&gt;
+
+&lt;div class="section" id="what-is-pypy"&gt;
+&lt;h2 style="text-align: center;"&gt;
+&lt;span style="font-size: x-large;"&gt;What is PyPy?&lt;/span&gt;&lt;/h2&gt;
+PyPy is a very compliant Python interpreter, almost a drop-in replacement for
+CPython 2.7, 3.6. It’s fast (&lt;a class="reference external" href="https://speed.pypy.org/"&gt;PyPy and CPython 2.7.x&lt;/a&gt; performance
+comparison) due to its integrated tracing JIT compiler.&lt;br&gt;
+
+&lt;br&gt;
+We also welcome developers of other &lt;a class="reference external" href="https://rpython.readthedocs.io/en/latest/examples.html"&gt;dynamic languages&lt;/a&gt; to see what RPython
+can do for them.&lt;br&gt;
+
+&lt;br&gt;
+This PyPy release supports:&lt;br&gt;
+&lt;ul style="text-align: left;"&gt;
+&lt;li&gt;&lt;strong&gt;x86&lt;/strong&gt; machines on most common operating systems
+(Linux 32/64 bit, Mac OS X 64-bit, Windows 32-bit, OpenBSD, FreeBSD)&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/div&gt;
+&lt;div class="section" id="what-is-pypy"&gt;
+&lt;ul style="text-align: left;"&gt;
+&lt;li&gt;big- and little-endian variants of &lt;strong&gt;PPC64&lt;/strong&gt; running Linux&lt;strong&gt; &lt;/strong&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/div&gt;
+&lt;div class="section" id="what-is-pypy"&gt;
+&lt;ul style="text-align: left;"&gt;
+&lt;li&gt;&lt;strong&gt;s390x&lt;/strong&gt; running Linux&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/div&gt;
+&lt;div class="section" id="what-is-pypy"&gt;
+&lt;ul style="text-align: left;"&gt;
+&lt;li&gt;64-bit &lt;strong&gt;ARM&lt;/strong&gt; machines running Linux&lt;/li&gt;
+&lt;/ul&gt;
+&lt;blockquote&gt;
+&lt;div&gt;
+&lt;/div&gt;
+&lt;/blockquote&gt;
+Unfortunately at the moment of writing our ARM buildbots are out of service,
+so for now we are &lt;strong&gt;not&lt;/strong&gt; releasing any binary for the ARM architecture (32-bit), although PyPy does support ARM 32-bit processors.&lt;br&gt;
+&lt;br&gt;
+&lt;div class="section" id="changelog"&gt;
+&lt;h2 style="text-align: center;"&gt;
+&lt;span style="font-size: x-large;"&gt;What else is new?&lt;/span&gt;&lt;/h2&gt;
+PyPy 7.1 was released in March, 2019.
+There are many incremental improvements to RPython and PyPy, For more information about the 7.2.0 release, see the full &lt;a href="https://pypy.readthedocs.io/en/latest/release-v7.2.0.html"&gt;changelog&lt;/a&gt;.&lt;br&gt;
+&lt;br&gt;
+Please update, and continue to help us make PyPy better.&lt;br&gt;
+&lt;br&gt;
+Cheers,&lt;br&gt;
+The PyPy team
+&lt;/div&gt;
+&lt;br&gt;
+&lt;br&gt;
+
+&lt;/div&gt;
+&lt;/div&gt;</description><category>release</category><guid>https://www.pypy.org/posts/2019/10/pypy-v72-released-1090406556726313495.html</guid><pubDate>Mon, 14 Oct 2019 18:46:00 GMT</pubDate></item><item><title>PyPy 7.1.1 Bug Fix Release</title><link>https://www.pypy.org/posts/2019/04/pypy-711-bug-fix-release-6539023630991217367.html</link><dc:creator>The PyPy Team</dc:creator><description>&lt;div dir="ltr" style="text-align: left;"&gt;
+The PyPy team is proud to release a bug-fix release version 7.1.1 of PyPy, which
+includes two different interpreters:&lt;br&gt;
+&lt;ul style="text-align: left;"&gt;
+&lt;li&gt;PyPy2.7, which is an interpreter supporting the syntax and the features of
+Python 2.&lt;/li&gt;
+&lt;li&gt;PyPy3.6-beta: the second official release of PyPy to support 3.6
+features.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;blockquote&gt;
+&lt;div&gt;
+&lt;/div&gt;
+&lt;/blockquote&gt;
+The interpreters are based on much the same codebase, thus the double
+release.&lt;br&gt;
+
+&lt;br&gt;
+This bugfix fixes bugs related to large lists, dictionaries, and sets, some corner cases with unicode, and &lt;a href="https://www.python.org/dev/peps/pep-3118/"&gt;PEP 3118&lt;/a&gt; memory views of ctype structures. It also fixes a few issues related to the ARM 32-bit backend. For the complete list see the &lt;a href="https://doc.pypy.org/en/latest/release-v7.1.1.html"&gt;changelog.&lt;/a&gt;&lt;br&gt;
+&lt;br&gt;
+You can download the v7.1.1 releases here:&lt;br&gt;
+
+&lt;blockquote&gt;
+&lt;div&gt;
+&lt;a class="reference external" href="https://pypy.org/download.html"&gt;https://pypy.org/download.html&lt;/a&gt;&lt;/div&gt;
+&lt;/blockquote&gt;
+&lt;br&gt;
+As always, this release is 100% compatible with the previous one and fixed
+several issues and bugs raised by the growing community of PyPy users.
+We strongly recommend updating.&lt;br&gt;
+&lt;br&gt;
+The PyPy3.6 release is rapidly maturing, but is still considered beta-quality.&lt;br&gt;
+&lt;br&gt;
+The PyPy team &lt;/div&gt;</description><category>release</category><guid>https://www.pypy.org/posts/2019/04/pypy-711-bug-fix-release-6539023630991217367.html</guid><pubDate>Thu, 18 Apr 2019 15:24:00 GMT</pubDate></item><item><title>PyPy v7.1 released; now uses utf-8 internally for unicode strings</title><link>https://www.pypy.org/posts/2019/03/pypy-v71-released-now-uses-utf-8-451324088028792912.html</link><dc:creator>The PyPy Team</dc:creator><description>&lt;div dir="ltr" style="text-align: left;"&gt;
+The PyPy team is proud to release version 7.1.0 of PyPy, which includes
+two different interpreters:&lt;br&gt;
+
+&lt;blockquote&gt;
+&lt;div&gt;
+&lt;ul class="simple"&gt;
+&lt;li&gt;PyPy2.7, which is an interpreter supporting the syntax and the features of
+Python 2.7&lt;/li&gt;
+&lt;li&gt;PyPy3.6-beta: this is the second official release of PyPy to support 3.6
+features, although it is still considered beta quality.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/div&gt;
+&lt;/blockquote&gt;
+The interpreters are based on much the same codebase, thus the double
+release.&lt;br&gt;
+
+&lt;br&gt;
+This release, coming fast on the heels of 7.0 in February, finally merges the
+internal refactoring of unicode representation as UTF-8. Removing the
+conversions from strings to unicode internally lead to a nice speed bump. We merged the utf-8 changes to the py3.5 branch (Python3.5.3) but will concentrate on 3.6 going forward.&lt;br&gt;
+
+&lt;br&gt;
+We also improved the ability to use the buffer protocol with ctype structures
+and arrays.&lt;br&gt;
+
+&lt;br&gt;
+The &lt;a class="reference external" href="https://cffi.readthedocs.io/"&gt;CFFI&lt;/a&gt; backend has been updated to version 1.12.2. We recommend using CFFI
+rather than c-extensions to interact with C, and &lt;a class="reference external" href="https://cppyy.readthedocs.io/"&gt;cppyy&lt;/a&gt; for interacting with
+C++ code.&lt;br&gt;
+ You can download the v7.1 releases here:&lt;br&gt;
+
+&lt;blockquote&gt;
+&lt;div&gt;
+&lt;a class="reference external" href="https://pypy.org/download.html"&gt;https://pypy.org/download.html&lt;/a&gt;&lt;/div&gt;
+&lt;/blockquote&gt;
+We would like to thank our donors for the continued support of the PyPy
+project. If PyPy is not quite good enough for your needs, we are available for
+direct consulting work.&lt;br&gt;
+
+&lt;br&gt;
+We would also like to thank our contributors and encourage new people to join
+the project. PyPy has many layers and we need help with all of them: &lt;a class="reference external" href="https://doc.pypy.org/en/latest/index.html"&gt;PyPy&lt;/a&gt;
+and &lt;a class="reference external" href="https://rpython.readthedocs.org/"&gt;RPython&lt;/a&gt; documentation improvements, tweaking popular modules to run
+on pypy, or general &lt;a class="reference external" href="https://doc.pypy.org/en/latest/project-ideas.html"&gt;help&lt;/a&gt; with making RPython’s JIT even better.&lt;br&gt;
+
+&lt;div class="section" id="what-is-pypy"&gt;
+&lt;h2 style="text-align: center;"&gt;
+&lt;span style="font-size: x-large;"&gt;What is PyPy?&lt;/span&gt;&lt;/h2&gt;
+PyPy is a very compliant Python interpreter, almost a drop-in replacement for
+CPython 2.7, 3.6. It’s fast (&lt;a class="reference external" href="https://speed.pypy.org/"&gt;PyPy and CPython 2.7.x&lt;/a&gt; performance
+comparison) due to its integrated tracing JIT compiler.&lt;br&gt;
+
+&lt;br&gt;
+We also welcome developers of other &lt;a class="reference external" href="https://rpython.readthedocs.io/en/latest/examples.html"&gt;dynamic languages&lt;/a&gt; to see what RPython
+can do for them.&lt;br&gt;
+
+This PyPy release supports:&lt;br&gt;
+&lt;strong&gt; &lt;/strong&gt;&lt;/div&gt;
+&lt;div class="section" id="what-is-pypy"&gt;
+&lt;ul class="simple"&gt;
+&lt;li&gt;&lt;strong&gt;x86&lt;/strong&gt; machines on most common operating systems
+(Linux 32/64 bits, Mac OS X 64 bits, Windows 32 bits, OpenBSD, FreeBSD)&lt;/li&gt;
+&lt;li&gt;big- and little-endian variants of &lt;strong&gt;PPC64&lt;/strong&gt; running Linux&lt;/li&gt;
+&lt;li&gt; &lt;b&gt;ARM32 &lt;/b&gt;although we do not supply downloadable binaries at this time&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;s390x&lt;/strong&gt; running Linux&lt;/li&gt;
+&lt;/ul&gt;
+&lt;div class="section" id="changelog"&gt;
+&lt;h2 style="text-align: center;"&gt;
+&lt;span style="font-size: x-large;"&gt;What else is new?&lt;/span&gt;&lt;/h2&gt;
+PyPy 7.0 was released in February, 2019.
+There are many incremental improvements to RPython and PyPy, for more information see the &lt;a class="reference external" href="https://doc.pypy.org/en/latest/release-v7.1.0.html#changelog"&gt;changelog&lt;/a&gt;.&lt;br&gt;
+&lt;br&gt;
+Please update, and continue to help us make PyPy better.&lt;br&gt;
+&lt;br&gt;
+&lt;br&gt;
+Cheers, The PyPy team
+&lt;/div&gt;
+&lt;br&gt;
+
+
+&lt;/div&gt;
+&lt;/div&gt;</description><category>release</category><guid>https://www.pypy.org/posts/2019/03/pypy-v71-released-now-uses-utf-8-451324088028792912.html</guid><pubDate>Sun, 24 Mar 2019 19:14:00 GMT</pubDate></item><item><title>PyPy v7.0.0: triple release of 2.7, 3.5 and 3.6-alpha</title><link>https://www.pypy.org/posts/2019/02/pypy-v700-triple-release-of-27-35-and-606875333356156076.html</link><dc:creator>The PyPy Team</dc:creator><description>&lt;br&gt;
+&lt;div class="document" id="pypy-v7-0-0-triple-release-of-2-7-3-5-and-3-6-alpha"&gt;
+The PyPy team is proud to release the version 7.0.0 of PyPy, which includes
+three different interpreters:&lt;br&gt;
+&lt;blockquote&gt;
+&lt;ul class="simple"&gt;
+&lt;li&gt;PyPy2.7, which is an interpreter supporting the syntax and the features of
+Python 2.7&lt;/li&gt;
+&lt;li&gt;PyPy3.5, which supports Python 3.5&lt;/li&gt;
+&lt;li&gt;PyPy3.6-alpha: this is the first official release of PyPy to support 3.6
+features, although it is still considered alpha quality.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/blockquote&gt;
+All the interpreters are based on much the same codebase, thus the triple
+release.&lt;br&gt;
+Until we can work with downstream providers to distribute builds with PyPy, we
+have made packages for some common packages &lt;a class="reference external" href="https://github.com/antocuni/pypy-wheels"&gt;available as wheels&lt;/a&gt;.&lt;br&gt;
+The &lt;a class="reference external" href="https://doc.pypy.org/en/latest/gc_info.html#semi-manual-gc-management"&gt;GC hooks&lt;/a&gt; , which can be used to gain more insights into its
+performance, has been improved and it is now possible to manually manage the
+GC by using a combination of &lt;tt class="docutils literal"&gt;gc.disable&lt;/tt&gt; and &lt;tt class="docutils literal"&gt;gc.collect_step&lt;/tt&gt;. See the
+&lt;a class="reference external" href="https://morepypy.blogspot.com/2019/01/pypy-for-low-latency-systems.html"&gt;GC blog post&lt;/a&gt;.&lt;br&gt;
+We updated the &lt;a class="reference external" href="https://cffi.readthedocs.io/"&gt;cffi&lt;/a&gt; module included in PyPy to version 1.12, and the
+&lt;a class="reference external" href="https://cppyy.readthedocs.io/"&gt;cppyy&lt;/a&gt; backend to 1.4. Please use these to wrap your C and C++ code,
+respectively, for a JIT friendly experience.&lt;br&gt;
+As always, this release is 100% compatible with the previous one and fixed
+several issues and bugs raised by the growing community of PyPy users.
+We strongly recommend updating.&lt;br&gt;
+The PyPy3.6 release and the Windows PyPy3.5 release are still not production
+quality so your mileage may vary. There are open issues with incomplete
+compatibility and c-extension support.&lt;br&gt;
+The utf8 branch that changes internal representation of unicode to utf8 did not
+make it into the release, so there is still more goodness coming.
+You can download the v7.0 releases here:&lt;br&gt;
+&lt;blockquote&gt;
+&lt;a class="reference external" href="https://pypy.org/download.html"&gt;https://pypy.org/download.html&lt;/a&gt;&lt;/blockquote&gt;
+We would like to thank our donors for the continued support of the PyPy
+project. If PyPy is not quite good enough for your needs, we are available for
+direct consulting work.&lt;br&gt;
+We would also like to thank our contributors and encourage new people to join
+the project. PyPy has many layers and we need help with all of them: &lt;a class="reference external" href="https://www.blogger.com/index.html"&gt;PyPy&lt;/a&gt;
+and &lt;a class="reference external" href="https://rpython.readthedocs.org/"&gt;RPython&lt;/a&gt; documentation improvements, tweaking popular modules to run
+on pypy, or general &lt;a class="reference external" href="https://www.blogger.com/project-ideas.html"&gt;help&lt;/a&gt; with making RPython's JIT even better.&lt;br&gt;
+&lt;div class="section" id="what-is-pypy"&gt;
+&lt;h1&gt;
+What is PyPy?&lt;/h1&gt;
+PyPy is a very compliant Python interpreter, almost a drop-in replacement for
+CPython 2.7, 3.5 and 3.6. It's fast (&lt;a class="reference external" href="https://speed.pypy.org/"&gt;PyPy and CPython 2.7.x&lt;/a&gt; performance
+comparison) due to its integrated tracing JIT compiler.&lt;br&gt;
+We also welcome developers of other &lt;a class="reference external" href="https://rpython.readthedocs.io/en/latest/examples.html"&gt;dynamic languages&lt;/a&gt; to see what RPython
+can do for them.&lt;br&gt;
+The PyPy release supports:&lt;br&gt;
+&lt;blockquote&gt;
+&lt;ul class="simple"&gt;
+&lt;li&gt;&lt;strong&gt;x86&lt;/strong&gt; machines on most common operating systems
+(Linux 32/64 bits, Mac OS X 64 bits, Windows 32 bits, OpenBSD, FreeBSD)&lt;/li&gt;
+&lt;li&gt;big- and little-endian variants of &lt;strong&gt;PPC64&lt;/strong&gt; running Linux,&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;s390x&lt;/strong&gt; running Linux&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/blockquote&gt;
+Unfortunately at the moment of writing our ARM buildbots are out of service,
+so for now we are &lt;strong&gt;not&lt;/strong&gt; releasing any binary for the ARM architecture.&lt;/div&gt;
+&lt;div class="section" id="changelog"&gt;
+&lt;h1&gt;
+What else is new?&lt;/h1&gt;
+PyPy 6.0 was released in April, 2018.
+There are many incremental improvements to RPython and PyPy, the complete listing is &lt;a class="reference external" href="https://doc.pypy.org/en/latest/release-v7.0.0.html"&gt;here&lt;/a&gt;.&lt;br&gt;
+&lt;br&gt;
+Please update, and continue to help us make PyPy better.&lt;br&gt;
+&lt;br&gt;
+&lt;br&gt;
+Cheers, The PyPy team
+&lt;/div&gt;
+&lt;/div&gt;</description><category>release</category><guid>https://www.pypy.org/posts/2019/02/pypy-v700-triple-release-of-27-35-and-606875333356156076.html</guid><pubDate>Mon, 11 Feb 2019 10:55:00 GMT</pubDate></item><item><title>PyPy2.7 and PyPy3.5 v6.0 dual release</title><link>https://www.pypy.org/posts/2018/04/pypy27-and-pypy35-v60-dual-release-7416552143474607997.html</link><dc:creator>The PyPy Team</dc:creator><description>&lt;div dir="ltr" style="text-align: left;"&gt;
+The PyPy team is proud to release both PyPy2.7 v6.0 (an interpreter supporting
+Python 2.7 syntax), and a PyPy3.5 v6.0 (an interpreter supporting Python
+3.5 syntax). The two releases are both based on much the same codebase, thus
+the dual release.&lt;br&gt;
+This release is a feature release following our previous 5.10 incremental
+release in late December 2017. Our C-API compatibility layer &lt;b&gt;&lt;code class="docutils literal"&gt;&lt;span class="pre"&gt;cpyext&lt;/span&gt;&lt;/code&gt;&lt;/b&gt; is
+now much faster (see the &lt;a class="reference external" href="https://morepypy.blogspot.it/2017/10/cape-of-good-hope-for-pypy-hello-from.html"&gt;blog post&lt;/a&gt;) as well as more complete. We have made
+many other improvements in speed and CPython compatibility. Since the changes
+affect the included python development header files, all c-extension modules must
+be recompiled for this version.&lt;br&gt;
+Until we can work with downstream providers to distribute builds with PyPy, we
+have made packages for some common packages &lt;a class="reference external" href="https://github.com/antocuni/pypy-wheels"&gt;available as wheels&lt;/a&gt;. You may
+compile yourself using &lt;b&gt;&lt;code class="docutils literal"&gt;&lt;span class="pre"&gt;pip&lt;/span&gt; &lt;span class="pre"&gt;install&lt;/span&gt; &lt;span class="pre"&gt;--no-build-isolation&lt;/span&gt; &lt;span class="pre"&gt;&amp;lt;package&amp;gt;&lt;/span&gt;&lt;/code&gt;&lt;/b&gt;, the
+&lt;b&gt;&lt;code class="docutils literal"&gt;&lt;span class="pre"&gt;no-build-isolation&lt;/span&gt;&lt;/code&gt;&lt;/b&gt; is currently needed for pip v10.&lt;br&gt;
+First-time python users are often stumped by silly typos and omissions when
+getting started writing code. We have improved our parser to emit more friendly
+&lt;a class="reference external" href="https://morepypy.blogspot.com/2018/04/improving-syntaxerror-in-pypy.html"&gt;syntax errors&lt;/a&gt;,  making PyPy not only faster but more friendly.&lt;br&gt;
+The GC now has &lt;a class="reference external" href="https://doc.pypy.org/en/latest/gc_info.html#gc-hooks"&gt;hooks&lt;/a&gt; to gain more insights into its performance&lt;br&gt;
+The default Matplotlib TkAgg backend now works with PyPy, as do pygame and &lt;a class="reference external" href="https://lazka.github.io/posts/2018-04_pypy-pygobject/index.html"&gt;pygobject&lt;/a&gt;.&lt;br&gt;
+We updated the &lt;a class="reference external" href="https://cffi.readthedocs.io/"&gt;cffi&lt;/a&gt; module included in PyPy to version 1.11.5, and the
+&lt;a class="reference external" href="https://cppyy.readthedocs.io/"&gt;cppyy&lt;/a&gt; backend to 0.6.0. Please use these to wrap your C and C++ code,
+respectively, for a JIT friendly experience.&lt;br&gt;
+As always, this release is 100% compatible with the previous one and fixed
+several issues and bugs raised by the growing community of PyPy users.
+We strongly recommend updating.&lt;br&gt;
+The Windows PyPy3.5 release is still considered beta-quality. There are open
+issues with unicode handling especially around system calls and c-extensions.&lt;br&gt;
+The utf8 branch that changes internal representation of unicode to utf8 did not
+make it into the release, so there is still more goodness coming. We also
+began working on a Python3.6 implementation, help is welcome.&lt;br&gt;
+You can download the v6.0 releases here:&lt;br&gt;
+&lt;blockquote&gt;
+&lt;div&gt;
+&lt;a class="reference external" href="https://pypy.org/download.html"&gt;https://pypy.org/download.html&lt;/a&gt;&lt;/div&gt;
+&lt;/blockquote&gt;
+We would like to thank our donors for the continued support of the PyPy
+project. If PyPy is not quite good enough for your needs, we are available for
+direct consulting work.&lt;br&gt;
+We would also like to thank our contributors and encourage new people to join
+the project. PyPy has many layers and we need help with all of them: &lt;a class="reference external" href="https://doc.pypy.org/en/latest/index.html"&gt;PyPy&lt;/a&gt;
+and &lt;a class="reference external" href="https://rpython.readthedocs.org/"&gt;RPython&lt;/a&gt; documentation improvements, tweaking popular &lt;a class="reference external" href="https://doc.pypy.org/en/latest/project-ideas.html#make-more-python-modules-pypy-friendly"&gt;modules&lt;/a&gt; to run
+on pypy, or general &lt;a class="reference external" href="https://doc.pypy.org/en/latest/project-ideas.html"&gt;help&lt;/a&gt; with making RPython’s JIT even better.&lt;br&gt;
+&lt;div class="section" id="what-is-pypy"&gt;
+&lt;h2 style="text-align: center;"&gt;
+What is PyPy?&lt;/h2&gt;
+PyPy is a very compliant Python interpreter, almost a drop-in replacement for
+CPython 2.7 and CPython 3.5. It’s fast (&lt;a class="reference external" href="https://speed.pypy.org/"&gt;PyPy and CPython 2.7.x&lt;/a&gt; performance comparison)
+due to its integrated tracing JIT compiler.&lt;br&gt;
+We also welcome developers of other &lt;a class="reference external" href="https://rpython.readthedocs.io/en/latest/examples.html"&gt;dynamic languages&lt;/a&gt; to see what RPython
+can do for them.&lt;br&gt;
+The PyPy release supports:&lt;br&gt;
+&lt;blockquote&gt;
+&lt;div&gt;
+&lt;ul class="simple"&gt;
+&lt;li&gt;&lt;b&gt;x86&lt;/b&gt; machines on most common operating systems
+(Linux 32/64 bits, Mac OS X 64 bits, Windows 32 bits, OpenBSD, FreeBSD)&lt;/li&gt;
+&lt;li&gt;newer &lt;b&gt;ARM&lt;/b&gt; hardware (ARMv6 or ARMv7, with VFPv3) running Linux,&lt;/li&gt;
+&lt;li&gt;big- and little-endian variants of &lt;b&gt;PPC64&lt;/b&gt; running Linux,&lt;/li&gt;
+&lt;li&gt;&lt;b&gt;s390x&lt;/b&gt; running Linux&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/div&gt;
+&lt;/blockquote&gt;
+&lt;/div&gt;
+&lt;div class="section" id="changelog"&gt;
+&lt;h2 style="text-align: center;"&gt;
+What else is new?&lt;/h2&gt;
+&lt;div style="text-align: left;"&gt;
+PyPy 5.10 was released in Dec, 2017.&lt;/div&gt;
+&lt;div style="text-align: left;"&gt;
+There are many incremental improvements to RPython and PyPy, the complete listing is &lt;a href="https://pypy.readthedocs.io/en/latest/release-v6.0.0.html"&gt;here&lt;/a&gt;.&lt;/div&gt;
+&lt;div style="text-align: left;"&gt;
+  &lt;/div&gt;
+Please update, and continue to help us make PyPy better.&lt;br&gt;
+&lt;br&gt;
+Cheers, The PyPy team&lt;/div&gt;
+&lt;/div&gt;</description><category>release</category><guid>https://www.pypy.org/posts/2018/04/pypy27-and-pypy35-v60-dual-release-7416552143474607997.html</guid><pubDate>Thu, 26 Apr 2018 01:12:00 GMT</pubDate></item><item><title>PyPy 5.10.1 bugfix release for python 3.5</title><link>https://www.pypy.org/posts/2018/01/pypy-5101-bugfix-release-for-python-35-8485250762789380657.html</link><dc:creator>The PyPy Team</dc:creator><description>&lt;div dir="ltr" style="text-align: left;"&gt;
+We have released a bug fix PyPy3.5-v5.10.1
+due to the following issues:&lt;br&gt;
+&lt;blockquote&gt;
+&lt;div&gt;
+&lt;ul class="simple"&gt;
+&lt;li&gt;Fix &lt;code class="docutils literal"&gt;&lt;span class="pre"&gt;time.sleep(float('nan'))&lt;/span&gt;&lt;/code&gt; which would hang on Windows&lt;/li&gt;
+&lt;li&gt;Fix missing &lt;code class="docutils literal"&gt;&lt;span class="pre"&gt;errno&lt;/span&gt;&lt;/code&gt; constants on Windows&lt;/li&gt;
+&lt;li&gt;Fix issue &lt;a class="reference external" href="https://foss.heptapod.net/pypy/pypy/-/issues/2718"&gt;2718&lt;/a&gt; for the REPL on Linux&lt;/li&gt;
+&lt;li&gt;Fix an overflow in converting int secs to nanosecs (issue &lt;a class="reference external" href="https://foss.heptapod.net/pypy/pypy/-/issues/2717"&gt;2717&lt;/a&gt; )&lt;/li&gt;
+&lt;li&gt;Using kwarg &lt;span&gt;&lt;code class="docutils literal"&gt;&lt;span class="pre"&gt;'flag'&lt;/span&gt;&lt;/code&gt;&lt;/span&gt; to &lt;span&gt;&lt;code class="docutils literal"&gt;&lt;span class="pre"&gt;os.setxattr&lt;/span&gt;&lt;/code&gt;&lt;/span&gt; had no effect&lt;/li&gt;
+&lt;li&gt;Fix the winreg module for unicode entries in the registry on Windows&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/div&gt;
+&lt;/blockquote&gt;
+Note that many of these fixes are for our new beta version of PyPy3.5 on Windows. There may be more unicode problems in the Windows beta version,
+especially concerning directory- and file-names with non-ASCII
+characters.&lt;br&gt;
+&lt;br&gt;
+On macOS, we recommend you wait for the
+&lt;a class="reference external" href="https://brewformulas.org/Pypy"&gt;Homebrew&lt;/a&gt; package to prevent issues with third-party packages. For other supported platforms our &lt;a href="https://bitbucket.org/pypy/pypy/downloads"&gt;downloads&lt;/a&gt; are available now.&lt;br&gt;
+Thanks to those who reported the issues.&lt;br&gt;
+&lt;br&gt;
+&lt;div class="section" id="what-is-pypy"&gt;
+&lt;h2&gt;
+What is PyPy?&lt;/h2&gt;
+PyPy is a very compliant Python interpreter, almost a drop-in replacement for
+CPython 2.7 and CPython 3.5. It’s fast (&lt;a class="reference external" href="https://speed.pypy.org/"&gt;PyPy and CPython 2.7.x&lt;/a&gt; performance comparison)
+due to its integrated tracing JIT compiler.&lt;br&gt;
+
+We also welcome developers of other &lt;a class="reference external" href="https://rpython.readthedocs.io/en/latest/examples.html"&gt;dynamic languages&lt;/a&gt; to see what RPython
+can do for them.&lt;br&gt;
+
+This PyPy 3.5 release supports:&lt;br&gt;
+
+&lt;blockquote&gt;
+&lt;div&gt;
+&lt;ul class="simple"&gt;
+&lt;li&gt;&lt;strong&gt;x86&lt;/strong&gt; machines on most common operating systems
+(Linux 32/64 bits, macOS 64 bits, Windows 32 bits, OpenBSD, FreeBSD)&lt;/li&gt;
+&lt;li&gt;newer &lt;strong&gt;ARM&lt;/strong&gt; hardware (ARMv6 or ARMv7, with VFPv3) running Linux,&lt;/li&gt;
+&lt;li&gt;big- and little-endian variants of &lt;strong&gt;PPC64&lt;/strong&gt; running Linux,&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;s390x&lt;/strong&gt; running Linux&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/div&gt;
+&lt;/blockquote&gt;
+Please update, and continue to help us make PyPy better.&lt;br&gt;
+
+Cheers&lt;br&gt;
+
+The PyPy Team&lt;br&gt;
+
+&lt;/div&gt;
+&lt;/div&gt;</description><category>release</category><guid>https://www.pypy.org/posts/2018/01/pypy-5101-bugfix-release-for-python-35-8485250762789380657.html</guid><pubDate>Sat, 13 Jan 2018 18:01:00 GMT</pubDate></item><item><title>PyPy2.7 and PyPy3.5 v5.10 dual release</title><link>https://www.pypy.org/posts/2017/12/pypy27-and-pypy35-v510-dual-release-3223396318213306071.html</link><dc:creator>The PyPy Team</dc:creator><description>&lt;div dir="ltr" style="text-align: left;"&gt;
+&lt;p&gt;The PyPy team is proud to release both PyPy2.7 v5.10 (an interpreter supporting
+Python 2.7 syntax), and a final PyPy3.5 v5.10 (an interpreter for Python
+3.5 syntax). The two releases are both based on much the same codebase, thus
+the dual release.&lt;/p&gt;
+&lt;p&gt;This release is an incremental release with very few new features, the main
+feature being the final PyPy3.5 release that works on linux and OS X with beta
+windows support. It also includes fixes for &lt;a class="reference external" href="https://vmprof.readthedocs.io"&gt;vmprof&lt;/a&gt; cooperation with greenlets.&lt;/p&gt;
+&lt;p&gt;Compared to 5.9, the 5.10 release contains mostly bugfixes and small improvements.
+We have in the pipeline big new features coming for PyPy 6.0 that did not make
+the release cut and should be available within the next couple months.&lt;/p&gt;
+&lt;p&gt;As always, this release is 100% compatible with the previous one and fixed
+several issues and bugs raised by the growing community of PyPy users.
+As always, we strongly recommend updating.&lt;/p&gt;
+&lt;p&gt;There are quite a few important changes that are in the pipeline that did not
+make it into the 5.10 release. Most important are speed improvements to cpyext
+(which will make numpy and pandas a bit faster) and utf8 branch that changes
+internal representation of unicode to utf8, which should help especially the
+Python 3.5 version of PyPy.&lt;/p&gt;
+&lt;p&gt;This release concludes the Mozilla Open Source &lt;a class="reference external" href="https://morepypy.blogspot.com/2016/08/pypy-gets-funding-from-mozilla-for.html"&gt;grant&lt;/a&gt; for having a compatible
+PyPy 3.5 release and we're very grateful for that.  Of course, we will continue
+to improve PyPy 3.5 and probably move to 3.6 during the course of 2018.&lt;/p&gt;
+&lt;p&gt;You can download the v5.10 releases here:&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;a class="reference external" href="https://pypy.org/download.html"&gt;https://pypy.org/download.html&lt;/a&gt;&lt;/blockquote&gt;
+&lt;p&gt;We would like to thank our donors for the continued support of the PyPy
+project.&lt;/p&gt;
+&lt;p&gt;We would also like to thank our contributors and
+encourage new people to join the project. PyPy has many
+layers and we need help with all of them: &lt;a class="reference external" href="https://www.pypy.org/posts/2017/12/index.html"&gt;PyPy&lt;/a&gt; and &lt;a class="reference external" href="https://rpython.readthedocs.org"&gt;RPython&lt;/a&gt; documentation
+improvements, tweaking popular &lt;a class="reference external" href="https://www.pypy.org/posts/2017/12/project-ideas.html#make-more-python-modules-pypy-friendly"&gt;modules&lt;/a&gt; to run on pypy, or general &lt;a class="reference external" href="https://www.pypy.org/posts/2017/12/project-ideas.html"&gt;help&lt;/a&gt;
+with making RPython's JIT even better.&lt;/p&gt;
+&lt;div class="section" id="what-is-pypy"&gt;
+&lt;h1&gt;What is PyPy?&lt;/h1&gt;
+&lt;p&gt;PyPy is a very compliant Python interpreter, almost a drop-in replacement for
+CPython 2.7 and CPython 3.5. It's fast (&lt;a class="reference external" href="https://speed.pypy.org"&gt;PyPy and CPython 2.7.x&lt;/a&gt; performance comparison)
+due to its integrated tracing JIT compiler.&lt;/p&gt;
+&lt;p&gt;We also welcome developers of other &lt;a class="reference external" href="https://rpython.readthedocs.io/en/latest/examples.html"&gt;dynamic languages&lt;/a&gt; to see what RPython
+can do for them.&lt;/p&gt;
+&lt;p&gt;The PyPy release supports:&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;ul class="simple"&gt;
+&lt;li&gt;&lt;strong&gt;x86&lt;/strong&gt; machines on most common operating systems
+(Linux 32/64 bits, Mac OS X 64 bits, Windows 32 bits, OpenBSD, FreeBSD)&lt;/li&gt;
+&lt;li&gt;newer &lt;strong&gt;ARM&lt;/strong&gt; hardware (ARMv6 or ARMv7, with VFPv3) running Linux,&lt;/li&gt;
+&lt;li&gt;big- and little-endian variants of &lt;strong&gt;PPC64&lt;/strong&gt; running Linux,&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;s390x&lt;/strong&gt; running Linux&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/blockquote&gt;
+&lt;/div&gt;
+&lt;div class="section" id="changelog"&gt;
+&lt;h1&gt;Changelog&lt;/h1&gt;
+&lt;ul class="simple"&gt;
+&lt;li&gt;improve ssl handling on windows for pypy3 (makes pip work)&lt;/li&gt;
+&lt;li&gt;improve unicode handling in various error reporters&lt;/li&gt;
+&lt;li&gt;fix vmprof cooperation with greenlets&lt;/li&gt;
+&lt;li&gt;fix some things in cpyext&lt;/li&gt;
+&lt;li&gt;test and document the cmp(nan, nan) == 0 behaviour&lt;/li&gt;
+&lt;li&gt;don't crash when calling sleep with inf or nan&lt;/li&gt;
+&lt;li&gt;fix bugs in _io module&lt;/li&gt;
+&lt;li&gt;inspect.isbuiltin() now returns True for functions implemented in C&lt;/li&gt;
+&lt;li&gt;allow the sequences future-import, docstring, future-import for CPython bug compatibility&lt;/li&gt;
+&lt;li&gt;Issue #2699: non-ascii messages in warnings&lt;/li&gt;
+&lt;li&gt;posix.lockf&lt;/li&gt;
+&lt;li&gt;fixes for FreeBSD platform&lt;/li&gt;
+&lt;li&gt;add .debug files, so builds contain debugging info, instead of being stripped&lt;/li&gt;
+&lt;li&gt;improvements to cppyy&lt;/li&gt;
+&lt;li&gt;issue #2677 copy pure c PyBuffer_{From,To}Contiguous from cpython&lt;/li&gt;
+&lt;li&gt;issue #2682, split firstword on any whitespace in sqlite3&lt;/li&gt;
+&lt;li&gt;ctypes: allow ptr[0] = foo when ptr is a pointer to struct&lt;/li&gt;
+&lt;li&gt;matplotlib will work with tkagg backend once &lt;a class="reference external" href="https://github.com/matplotlib/matplotlib/pull/9356"&gt;matplotlib pr #9356&lt;/a&gt; is merged&lt;/li&gt;
+&lt;li&gt;improvements to utf32 surrogate handling&lt;/li&gt;
+&lt;li&gt;cffi version bump to 1.11.2&lt;/li&gt;
+&lt;/ul&gt;
+Maciej Fijalkowski, Matti Picus and the whole PyPy team
+&lt;/div&gt;
+&lt;br&gt;&lt;/div&gt;</description><category>release</category><guid>https://www.pypy.org/posts/2017/12/pypy27-and-pypy35-v510-dual-release-3223396318213306071.html</guid><pubDate>Mon, 25 Dec 2017 18:51:00 GMT</pubDate></item></channel></rss>

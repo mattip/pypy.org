@@ -1,0 +1,133 @@
+<?xml version="1.0" encoding="utf-8"?>
+<?xml-stylesheet type="text/xsl" href="../assets/xml/rss.xsl" media="all"?><rss version="2.0" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>PyPy (Posts about releasepypy)</title><link>https://www.pypy.org/</link><description></description><atom:link href="https://www.pypy.org/categories/releasepypy.xml" rel="self" type="application/rss+xml"></atom:link><language>en</language><copyright>Contents © 2021 &lt;a href="mailto:pypy-dev@pypy.org"&gt;The PyPy Team&lt;/a&gt; </copyright><lastBuildDate>Tue, 09 Mar 2021 08:48:53 GMT</lastBuildDate><generator>Nikola (getnikola.com)</generator><docs>http://blogs.law.harvard.edu/tech/rss</docs><item><title>PyPy 7.3.1 released</title><link>https://www.pypy.org/posts/2020/04/pypy-731-released-6266451647387657480.html</link><dc:creator>The PyPy Team</dc:creator><description>&lt;div dir="ltr" style="text-align: left;"&gt;
+The PyPy team is proud to release the version 7.3.1 of PyPy, which includes
+two different interpreters:&lt;br&gt;
+
+&lt;blockquote&gt;
+&lt;div&gt;
+&lt;ul class="simple"&gt;
+&lt;li&gt;PyPy2.7, which is an interpreter supporting the syntax and the features of
+Python 2.7 including the stdlib for CPython 2.7.13&lt;/li&gt;
+&lt;li&gt;PyPy3.6: which is an interpreter supporting the syntax and the features of
+Python 3.6, including the stdlib for CPython 3.6.9.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/div&gt;
+&lt;/blockquote&gt;
+The interpreters are based on much the same codebase, thus the multiple
+release. This is a micro release, no APIs have changed since the 7.3.0 release
+in December, but read on to find out what is new.&lt;br&gt;
+
+&lt;br&gt;
+Conda Forge now &lt;a class="reference external" href="https://conda-forge.org/blog//2020/03/10/pypy"&gt;supports PyPy&lt;/a&gt; as a Python interpreter. The support right now
+is being built out. After this release, many more c-extension-based
+packages can be successfully built and uploaded. This is the result of a lot of
+hard work and good will on the part of the Conda Forge team.  A big shout out
+to them for taking this on.&lt;br&gt;
+
+&lt;br&gt;
+We have worked with the Python packaging group to support tooling around
+building third party packages for Python, so this release updates the pip and
+setuptools installed when executing &lt;code class="docutils literal notranslate"&gt;&lt;span class="pre"&gt;pypy&lt;/span&gt; &lt;span class="pre"&gt;-mensurepip&lt;/span&gt;&lt;/code&gt; to &lt;code class="docutils literal notranslate"&gt;&lt;span class="pre"&gt;pip&amp;gt;=20&lt;/span&gt;&lt;/code&gt;. This
+completes the work done to update the PEP 425 &lt;a class="reference external" href="https://www.python.org/dev/peps/pep-0425/#python-tag"&gt;python tag&lt;/a&gt; from &lt;code class="docutils literal notranslate"&gt;&lt;span class="pre"&gt;pp373&lt;/span&gt;&lt;/code&gt; to
+mean “PyPy 7.3 running python3” to &lt;code class="docutils literal notranslate"&gt;&lt;span class="pre"&gt;pp36&lt;/span&gt;&lt;/code&gt; meaning “PyPy running Python
+3.6” (the format is recommended in the PEP). The tag itself was
+changed in 7.3.0, but older pip versions build their own tag without querying
+PyPy. This means that wheels built for the previous tag format will not be
+discovered by pip from this version, so library authors should update their
+PyPy-specific wheels on PyPI.&lt;br&gt;
+
+&lt;br&gt;
+Development of PyPy is transitioning to &lt;a class="reference external" href="https://foss.heptapod.net/pypy/pypy"&gt;https://foss.heptapod.net/pypy/pypy&lt;/a&gt;.
+This move was covered more extensively in the &lt;a class="reference external" href="https://morepypy.blogspot.com/2020/02/pypy-and-cffi-have-moved-to-heptapod.html"&gt;blog post&lt;/a&gt; from last month.&lt;br&gt;
+
+&lt;br&gt;
+The &lt;a class="reference external" href="https://cffi.readthedocs.io/"&gt;CFFI&lt;/a&gt; backend has been updated to version 14.0. We recommend using CFFI
+rather than c-extensions to interact with C, and using &lt;a class="reference external" href="https://cppyy.readthedocs.io/"&gt;cppyy&lt;/a&gt; for performant
+wrapping of C++ code for Python. The &lt;code class="docutils literal notranslate"&gt;&lt;span class="pre"&gt;cppyy&lt;/span&gt;&lt;/code&gt; backend has been enabled
+experimentally for win32, try it out and let use know how it works.&lt;br&gt;
+
+&lt;br&gt;
+Enabling &lt;code class="docutils literal notranslate"&gt;&lt;span class="pre"&gt;cppyy&lt;/span&gt;&lt;/code&gt; requires a more modern C compiler, so win32 is now built
+with MSVC160 (Visual Studio 2019). This is true for PyPy 3.6 as well as for 2.7.&lt;br&gt;
+
+&lt;br&gt;
+We have improved warmup time by up to 20%, performance of &lt;code class="docutils literal notranslate"&gt;&lt;span class="pre"&gt;io.StringIO&lt;/span&gt;&lt;/code&gt; to
+match if not be faster than CPython, and improved JIT code generation for
+generators (and generator expressions in particular) when passing them to
+functions like &lt;code class="docutils literal notranslate"&gt;&lt;span class="pre"&gt;sum&lt;/span&gt;&lt;/code&gt;, &lt;code class="docutils literal notranslate"&gt;&lt;span class="pre"&gt;map&lt;/span&gt;&lt;/code&gt;, and &lt;code class="docutils literal notranslate"&gt;&lt;span class="pre"&gt;map&lt;/span&gt;&lt;/code&gt; that consume them. Performance of closures has also be improved in certain situations.&lt;br&gt;
+
+&lt;br&gt;
+As always, this release fixed several issues and bugs raised by the growing
+community of PyPy users.  We strongly recommend updating. Many of the fixes are
+the direct result of end-user bug reports, so please continue reporting issues
+as they crop up.&lt;br&gt;
+
+You can find links to download the v7.3.1 releases here:&lt;br&gt;
+
+&lt;blockquote&gt;
+&lt;div&gt;
+&lt;a class="reference external" href="https://pypy.org/download.html"&gt;https://pypy.org/download.html&lt;/a&gt;&lt;/div&gt;
+&lt;/blockquote&gt;
+We would like to thank our donors for the continued support of the PyPy
+project. If PyPy is not quite good enough for your needs, we are available for
+direct consulting work.&lt;br&gt;
+
+&lt;br&gt;
+We would also like to thank our contributors and encourage new people to join
+the project. PyPy has many layers and we need help with all of them: &lt;a class="reference external" href="https://doc.pypy.org/en/latest/index.html"&gt;PyPy&lt;/a&gt;
+and &lt;a class="reference external" href="https://rpython.readthedocs.org/"&gt;RPython&lt;/a&gt; documentation improvements, tweaking popular modules to run
+on PyPy, or general &lt;a class="reference external" href="https://doc.pypy.org/en/latest/project-ideas.html"&gt;help&lt;/a&gt; with making RPython’s JIT even better. Since the
+previous release, we have accepted contributions from 13 new contributors,
+thanks for pitching in.&lt;br&gt;
+
+&lt;br&gt;
+If you are a Python library maintainer and use c-extensions, please consider
+making a cffi / cppyy version of your library that would be performant on PyPy.
+In any case both &lt;a class="reference external" href="https://github.com/joerick/cibuildwheel"&gt;cibuildwheel&lt;/a&gt; and the &lt;a class="reference external" href="https://github.com/matthew-brett/multibuild"&gt;multibuild system&lt;/a&gt; support
+building wheels for PyPy wheels.&lt;br&gt;
+
+
+&lt;div class="section" id="what-is-pypy"&gt;
+&lt;h2 style="text-align: center;"&gt;
+ &lt;/h2&gt;
+&lt;h2 style="text-align: center;"&gt;
+&lt;span style="font-size: x-large;"&gt;What is PyPy?&lt;/span&gt;&lt;/h2&gt;
+PyPy is a very compliant Python interpreter, almost a drop-in replacement for
+CPython 2.7, 3.6, and soon 3.7. It’s fast (&lt;a class="reference external" href="https://speed.pypy.org/"&gt;PyPy and CPython 2.7.x&lt;/a&gt; performance
+comparison) due to its integrated tracing JIT compiler.&lt;br&gt;
+
+&lt;br&gt;
+We also welcome developers of other &lt;a class="reference external" href="https://rpython.readthedocs.io/en/latest/examples.html"&gt;dynamic languages&lt;/a&gt; to see what RPython
+can do for them.&lt;br&gt;
+
+&lt;br&gt;
+This PyPy release supports:&lt;br&gt;
+
+&lt;blockquote&gt;
+&lt;div&gt;
+&lt;ul class="simple"&gt;
+&lt;li&gt;&lt;strong&gt;x86&lt;/strong&gt; machines on most common operating systems
+(Linux 32/64 bits, Mac OS X 64 bits, Windows 32 bits, OpenBSD, FreeBSD)&lt;/li&gt;
+&lt;li&gt;big- and little-endian variants of &lt;strong&gt;PPC64&lt;/strong&gt; running Linux,&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;s390x&lt;/strong&gt; running Linux&lt;/li&gt;
+&lt;li&gt;64-bit &lt;strong&gt;ARM&lt;/strong&gt; machines running Linux.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/div&gt;
+&lt;/blockquote&gt;
+&lt;br&gt;
+&lt;div class="section" id="changelog"&gt;
+&lt;h2 style="text-align: center;"&gt;
+&lt;span style="font-size: x-large;"&gt;What else is new?&lt;/span&gt;&lt;/h2&gt;
+For more information about the 7.3.1 release, see the full &lt;a href="https://pypy.readthedocs.io/en/latest/release-v7.3.1.html"&gt;changelog&lt;/a&gt;.&lt;br&gt;
+&lt;br&gt;
+Please update, and continue to help us make PyPy better.&lt;br&gt;
+&lt;br&gt;
+Cheers,&lt;br&gt;
+The PyPy team
+&lt;/div&gt;
+&lt;br&gt;&lt;br&gt;
+&lt;br&gt;
+The PyPy Team  &lt;br&gt;
+
+&lt;/div&gt;
+&lt;/div&gt;</description><category>releasepypy</category><guid>https://www.pypy.org/posts/2020/04/pypy-731-released-6266451647387657480.html</guid><pubDate>Fri, 10 Apr 2020 14:29:00 GMT</pubDate></item></channel></rss>

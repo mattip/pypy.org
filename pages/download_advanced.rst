@@ -11,9 +11,11 @@
 
 We provide pre-compiled binaries for many platforms and OSes:
 
-* the Python2.7 compatible release — **PyPy2.7 v7.3.23**
+* the Python2.7 compatible release — **PyPy2.7 v8.0.0**
 
-* the Python3.11 compatible release — **PyPy3.11 v7.3.23**
+* the Python3.11 compatible release — **PyPy3.11 v8.0.0**
+
+* the Python3.12 compatible release — **PyPy3.12 v8.0.0**
 
 .. note::
 
@@ -33,10 +35,11 @@ We provide pre-compiled binaries for many platforms and OSes:
   Anonymous tags work, this kind of tag doesn't ``Download <linux64-pypy3.10>``
 
 .. list-table:: `PyPy latest`_
-   :widths: 20 15 15 35
+   :widths: 20 15 15 15 35
    :header-rows: 1
 
    * - OS
+     - PyPy3.12
      - PyPy3.11
      - PyPy2.7
      - Notes
@@ -44,9 +47,11 @@ We provide pre-compiled binaries for many platforms and OSes:
    * - **Linux x86 64 bit**
      - Download__
      - Download__
-     - compatible with CentOS7 (manylinux2014) and later.
+     - Download__
+     - compatible with manylinux_2_28 and later.
 
    * - **Windows 64 bit**
+     - Download__
      - Download__
      - Download__
      - compatible with any windows 64-bit
@@ -56,10 +61,12 @@ We provide pre-compiled binaries for many platforms and OSes:
 
      - Download__
      - Download__
+     - Download__
      - MacOS >= 11. Not signed, for signed packages use Homebrew_.
 
    * - **MacOS x86_64**
 
+     - Download__
      - Download__
      - Download__
      - MacOS >= 10.15, not for Mojave and below. Not signed, for signed
@@ -69,24 +76,30 @@ We provide pre-compiled binaries for many platforms and OSes:
 
      - Download__
      - Download__
-     - compatible with CentOS7 (manylinux2014) and later.
+     - Download__
+     - compatible with manylinux_2_28 and later.
 
-.. __: https://downloads.python.org/pypy/pypy3.11-v7.3.23-linux64.tar.bz2
-.. __: https://downloads.python.org/pypy/pypy2.7-v7.3.23-linux64.tar.bz2
+.. __: https://downloads.python.org/pypy/pypy3.12-v8.0.0-linux64.tar.bz2
+.. __: https://downloads.python.org/pypy/pypy3.11-v8.0.0-linux64.tar.bz2
+.. __: https://downloads.python.org/pypy/pypy2.7-v8.0.0-linux64.tar.bz2
 
-.. __: https://downloads.python.org/pypy/pypy3.11-v7.3.23-win64.zip
-.. __: https://downloads.python.org/pypy/pypy2.7-v7.3.23-win64.zip
+.. __: https://downloads.python.org/pypy/pypy3.12-v8.0.0-win64.zip
+.. __: https://downloads.python.org/pypy/pypy3.11-v8.0.0-win64.zip
+.. __: https://downloads.python.org/pypy/pypy2.7-v8.0.0-win64.zip
 
-.. __: https://downloads.python.org/pypy/pypy3.11-v7.3.23-macos_arm64.tar.bz2
-.. __: https://downloads.python.org/pypy/pypy2.7-v7.3.23-macos_arm64.tar.bz2
+.. __: https://downloads.python.org/pypy/pypy3.12-v8.0.0-macos_arm64.tar.bz2
+.. __: https://downloads.python.org/pypy/pypy3.11-v8.0.0-macos_arm64.tar.bz2
+.. __: https://downloads.python.org/pypy/pypy2.7-v8.0.0-macos_arm64.tar.bz2
 
-.. __: https://downloads.python.org/pypy/pypy3.11-v7.3.23-macos_x86_64.tar.bz2
-.. __: https://downloads.python.org/pypy/pypy2.7-v7.3.23-macos_x86_64.tar.bz2
+.. __: https://downloads.python.org/pypy/pypy3.12-v8.0.0-macos_x86_64.tar.bz2
+.. __: https://downloads.python.org/pypy/pypy3.11-v8.0.0-macos_x86_64.tar.bz2
+.. __: https://downloads.python.org/pypy/pypy2.7-v8.0.0-macos_x86_64.tar.bz2
 
-.. __: https://downloads.python.org/pypy/pypy3.11-v7.3.23-aarch64.tar.bz2
-.. __: https://downloads.python.org/pypy/pypy2.7-v7.3.23-aarch64.tar.bz2
+.. __: https://downloads.python.org/pypy/pypy3.12-v8.0.0-aarch64.tar.bz2
+.. __: https://downloads.python.org/pypy/pypy3.11-v8.0.0-aarch64.tar.bz2
+.. __: https://downloads.python.org/pypy/pypy2.7-v8.0.0-aarch64.tar.bz2
 
-.. _`PyPy latest`: https://doc.pypy.org/release-v7.3.23.html
+.. _`PyPy latest`: https://doc.pypy.org/release-v8.0.0.html
 .. _`vcredist.x64.exe`: https://www.microsoft.com/en-us/download/details.aspx?id=52685
 
 ..
@@ -94,10 +107,11 @@ We provide pre-compiled binaries for many platforms and OSes:
 
 
 .. list-table:: Other Platforms
-   :widths: 20 15 15 35
+   :widths: 20 15 15 15 35
    :header-rows: 1
 
    * - OS
+     - PyPy3.12
      - PyPy3.11
      - PyPy2.7
      - Notes
@@ -106,10 +120,12 @@ We provide pre-compiled binaries for many platforms and OSes:
 
      - Download__
      - Download__
-     - compatible with CentOS7 (manylinux2014) and later
+     - Download__
+     - compatible with manylinux_2_28 and later
 
-.. __: https://downloads.python.org/pypy/pypy3.11-v7.3.23-linux32.tar.bz2
-.. __: https://downloads.python.org/pypy/pypy2.7-v7.3.23-linux32.tar.bz2
+.. __: https://downloads.python.org/pypy/pypy3.12-v8.0.0-linux32.tar.bz2
+.. __: https://downloads.python.org/pypy/pypy3.11-v8.0.0-linux32.tar.bz2
+.. __: https://downloads.python.org/pypy/pypy2.7-v8.0.0-linux32.tar.bz2
 
 
 .. _`Default (with a JIT Compiler)`:
@@ -240,7 +256,7 @@ The other versions of PyPy are:
 Installing
 ----------
 
-All binary versions are packaged in a ``tar.bz2`` or ``zip`` file.  When
+All binary versions are packaged in a ``tar.gz`` or ``zip`` file.  When
 uncompressed, they run in-place.  You can uncompress them
 either somewhere in your home directory or, say, in ``/opt``.
 If you want, put a symlink from somewhere like
@@ -283,17 +299,19 @@ See also more build instructions_.
 
    .. code-block:: bash
 
-     # switch to the branch that implements Python 3.11
-     git checkout branches/py3.11
+     # switch to the branch that implements Python 3.12
+     git checkout branches/py3.12
 
    Alternatively, get one of the following smaller packages for the source at
    the same revision as the above binaries:
 
-   * `pypy3.11-v7.3.23-src.tar.bz2`__ (sources, PyPy 3.11 only)
-   * `pypy2.7-v7.3.23-src.tar.bz2`__ (sources, PyPy 2.7 only)
+   * `pypy3.12-v8.0.0-src.tar.bz2`__ (sources, PyPy 3.12 only)
+   * `pypy3.11-v8.0.0-src.tar.bz2`__ (sources, PyPy 3.11 only)
+   * `pypy2.7-v8.0.0-src.tar.bz2`__ (sources, PyPy 2.7 only)
 
-   .. __: https://downloads.python.org/pypy/pypy3.11-v7.3.23-src.tar.bz2
-   .. __: https://downloads.python.org/pypy/pypy2.7-v7.3.23-src.tar.bz2
+   .. __: https://downloads.python.org/pypy/pypy3.12-v8.0.0-src.tar.bz2
+   .. __: https://downloads.python.org/pypy/pypy3.11-v8.0.0-src.tar.bz2
+   .. __: https://downloads.python.org/pypy/pypy2.7-v8.0.0-src.tar.bz2
 
 
 2. Make sure you **installed the dependencies.**  See the list here__.
@@ -319,7 +337,7 @@ See also more build instructions_.
      # get the sandbox version
      pypy ../../rpython/bin/rpython -O2 --sandbox targetpypystandalone
 
-5. Enjoy Mandelbrot ``:-)``  It takes on the order of half an hour to
+5. Enjoy Mandelbrot ``:-)``  It takes on the order of 15 minutes to
    finish the translation, and about 3GB of RAM on a 32-bit system
    and about 5GB on 64-bit systems.  (Do not start a translation on a
    machine with insufficient RAM!  It will just swap forever.  See
@@ -418,7 +436,7 @@ module for PyPy.  You can move it at any place where modules are
 normally found: e.g. in your project's main directory, or in a
 directory that you add to the env var ``PYTHONPATH``.
 
-.. _`package.py`: https://github.com/pypy/pypy/blob/release-pypy3.11-v7.3.23/pypy/tool/release/package.py
+.. _`package.py`: https://github.com/pypy/pypy/blob/release-pypy3.12-v8.0.0/pypy/tool/release/package.py
 
 
 Checksums

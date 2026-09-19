@@ -1,4 +1,4 @@
-.. title: PyPy v78.0.0 release
+.. title: PyPy v8.0.0 release
 .. slug: pypy-v800-release
 .. date: 2026-09-18 11:00:00 UTC
 .. tags: release
@@ -8,9 +8,9 @@
 .. type: rst
 .. author: mattip
 
-======================================================================
-PyPy v8.0.0: release of python 2.7, 3.11,3.12 beta released 2026-09-19
-======================================================================
+===========================================================================
+PyPy v8.0.0: release of python 2.7, 3.11, and 3.12 beta released 2026-09-19
+===========================================================================
 
 The PyPy team is proud to release version 8.0.0 of PyPy after the previous
 release on May 26, 2026. This is a major new version, hence the bump to 8.0.0.
@@ -33,7 +33,7 @@ version would be prudent.
 cp12-abi3 support
 -----------------
 
-PyPy's Python3.12 support comes with a new model for the C layer ``PyObject``.
+PyPy's Python 3.12 support comes with a new model for the C layer ``PyObject``.
 In order to link the C object to the internal RPython one, we have an extra
 field in the object ``ob_pypy_link``, as described in-depth in
 `rawrefcount-and-the-gc`_. In previous versions, this field was
@@ -107,7 +107,7 @@ The release includes three different interpreters:
   Python 3.11, including the stdlib for CPython 3.11.16. Barring security
   issues, this will be the last release to support 3.11.
 
-- PyPy3.12, supporting the syntax and features of Python3.12, including the
+- PyPy3.12, supporting the syntax and features of Python 3.12, including the
   stdlib for CPython 3.12.14.
 
 The interpreters are based on much the same codebase, thus the triple
@@ -131,7 +131,7 @@ making RPython's JIT even better.
 If you are a python library maintainer and use C-extensions, please consider
 making a CFFI_ version of your library that would be performant
 on PyPy. Failing that, PyPy will soon support the cp312-abi3 tag for limited
-ABI wheels .  In any case, `cibuildwheel`_ supports building wheels for PyPy.
+ABI wheels.  In any case, `cibuildwheel`_ supports building wheels for PyPy.
 
 .. _`PyPy`: https://doc.pypy.org/
 .. _`RPython`: https://rpython.readthedocs.org

@@ -34,13 +34,16 @@ Source
 
 .. class:: download_menu
 
-* `3.11 Source (tar.bz2)`__; `3.11 Source (zip)`__.
-* `2.7 Source (tar.bz2)`__; `2.7 Source (zip)`__.
+* `3.12 Source (tar.gz)`__; `3.12 Source (zip)`__.
+* `3.11 Source (tar.gz)`__; `3.11 Source (zip)`__.
+* `2.7 Source (tar.gz)`__; `2.7 Source (zip)`__.
 
-.. __: https://downloads.python.org/pypy/pypy3.11-v7.3.23-src.tar.bz2
-.. __: https://downloads.python.org/pypy/pypy3.11-v7.3.23-src.zip
-.. __: https://downloads.python.org/pypy/pypy2.7-v7.3.23-src.tar.bz2
-.. __: https://downloads.python.org/pypy/pypy2.7-v7.3.23-src.zip
+.. __: https://downloads.python.org/pypy/pypy3.11-v8.0.0-src.tar.gz
+.. __: https://downloads.python.org/pypy/pypy3.11-v8.0.0-src.zip
+.. __: https://downloads.python.org/pypy/pypy3.11-v8.0.0-src.tar.gz
+.. __: https://downloads.python.org/pypy/pypy3.11-v8.0.0-src.zip
+.. __: https://downloads.python.org/pypy/pypy2.7-v8.0.0-src.tar.gz
+.. __: https://downloads.python.org/pypy/pypy2.7-v8.0.0-src.zip
 
 
 More information

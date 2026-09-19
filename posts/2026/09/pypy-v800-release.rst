@@ -143,6 +143,7 @@ ABI wheels .  In any case, `cibuildwheel`_ supports building wheels for PyPy.
 .. _direct consulting: https://www.pypy.org/pypy-sponsors.html
 .. _`computed gotos`: https://eli.thegreenplace.net/2012/07/12/computed-goto-for-efficient-dispatch-tables
 .. _`the README`: https://github.com/pypy/pypy/tree/py3.12/pypy/tool/pyhdrdump#pyhdrdump
+.. _`clang-based pyhdrdump`: https://github.com/pypy/pypy/issues/3397#issuecomment-1872091878
 
 What is PyPy?
 =============

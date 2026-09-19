@@ -9,7 +9,7 @@
 .. author: mattip
 
 ======================================================================
-PyPy v8.0.0: release of python 2.7, 3.11,3.12 beta released 2026-09-XX
+PyPy v8.0.0: release of python 2.7, 3.11,3.12 beta released 2026-09-19
 ======================================================================
 
 The PyPy team is proud to release version 8.0.0 of PyPy after the previous
@@ -36,13 +36,12 @@ cp12-abi3 support
 PyPy's Python3.12 support comes with a new model for the C layer ``PyObject``.
 In order to link the C object to the internal RPython one, we have an extra
 field in the object ``ob_pypy_link``, as described in-depth in
-:ref:`rawrefcount-and-the-gc`. In previous versions, this field was
+`rawrefcount-and-the-gc`_. In previous versions, this field was
 visible in a way that makes the ``PyObject`` struct different from the CPython
 one. From v8.0.0, we "hide" the PyPy-only extension in a prefix before
 the pointer we hand off to C-extension modules. The goal of this work is to
-allow PyPy to use
-cp312-abi3 wheels produced for CPython 3.12 and up, using the limited ABI. The
-required pieces have all been put in place:
+allow PyPy to use cp312-abi3 wheels produced for CPython 3.12 and up, using the
+limited ABI. The required pieces have all been put in place:
 
 - PyPy's C headers, including struct definitions like ``PyObject``, are
   compatible with CPython's C headers when defining
@@ -59,6 +58,8 @@ Yes, this is a big step. We are working with Cython and PyO3 to make sure it
 all will Just Work™. Hopefully this will make it easier for packages to
 support PyPy.
   
+.. _`rawrefcount-and-the-gc`: https://doc.pypy.org/discussion/rawrefcount.html
+
 
 What is new in RPython code generation
 =======================================
@@ -72,7 +73,7 @@ have not been that impressive, we have made some steps forward:
   produces more compact sources, it does not boost performance as much as we
   wished.
 
-- The source code includes comments mappng the source back to the RPython code
+- The source code includes comments mapping the source back to the RPython code
   that generated the block. This is very helpful to see exactly what is going on,
   and may enable further improvements.
 
@@ -82,12 +83,16 @@ Dropping HPy
 We have dropped the internal `HPy`_ backend for PyPy. The HPy project's
 understanding of how to use handles instead of pointers was a good prototype,
 but the project did not attract enough supporters to become a new standard. The
-code is still in the PyPy codebase, and can be toggled on with a `build option <pypy-python-interpreter-options>`_
+code is still in the PyPy codebase, and can be toggled on with a `build option`_.
+
+.. _`build option`: https://doc.pypy.org/config/commandline.html#pypy-python-interpreter-options
 
 A revived tool comparing headers and exported functions
 =======================================================
 
-We revived the clang-based pyhdrdump from :issue:`3397#issuecomment-1872091878` to compare PyPy's header files to CPython's header files. See `the README`_ for more information on how it works and how to use it.
+We revived the `clang-based pyhdrdump`_ to compare PyPy's header files to
+CPython's header files. See `the README`_ for more information on how it works
+and how to use it.
 
 Interpreters
 ============
@@ -126,9 +131,7 @@ making RPython's JIT even better.
 If you are a python library maintainer and use C-extensions, please consider
 making a CFFI_ version of your library that would be performant
 on PyPy. Failing that, PyPy will soon support the cp312-abi3 tag for limited
-ABI wheels supporting the CPython 3.12 ABI contract for 3.12 and above (which
-makes ``Py_DECREF`` a function call, not a macro).  In any case,
-`cibuildwheel`_ supports building wheels for PyPy.
+ABI wheels .  In any case, `cibuildwheel`_ supports building wheels for PyPy.
 
 .. _`PyPy`: https://doc.pypy.org/
 .. _`RPython`: https://rpython.readthedocs.org
